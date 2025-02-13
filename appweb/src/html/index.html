@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Réstore</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
     <style>
         .hidden-checkbox {
             display: none;
@@ -20,7 +21,7 @@
         }
     </style>
 </head>
-<body class="bg-white text-[#095434] min-h-screen flex flex-col">
+<body class="bg-white text-[#095434] min-h-screen flex flex-col font-[\'Merriweather\']">
 
 <input type="checkbox" id="announcementToggle" class="hidden-checkbox">
 
@@ -31,7 +32,7 @@
     </label>
 </div>
 
-<header class="bg-[#81A969] text-white shadow-lg">
+<header class="bg-[#81A969] text-white shadow-lg font-[\'Merriweather\']">
     <div class="container mx-auto flex items-center justify-between pt-2 px-6">
         <div class="flex items-center">
             <img src="../img/logo_1_vert_foncé.png" alt="Réstore Logo" class="h-20 pl-10">
@@ -53,7 +54,7 @@
         </nav>
         <div class="flex items-center space-x-4">
             <div class="relative">
-                <input type="text" placeholder="Rechercher..." class="px-4 py-2 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-[#095434]">
+                <input type="text" placeholder="Rechercher..." class="px-4 py-2 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-[#095434] font-[\'Merriweather\']">
                 <svg class="w-5 h-5 absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M12.9 14.32a8 8 0 111.414-1.414l4.387 4.387a1 1 0 01-1.414 1.414l-4.387-4.387zM14 8a6 6 0 11-12 0 6 6 0 0112 0z" clip-rule="evenodd"></path>
                 </svg>
@@ -62,206 +63,51 @@
                 <img src="../img/cart.png" alt="Panier" class="h-8">
             </a>
             <div class="relative">
-                <!-- Icône profil -->
                 <a href="#" id="profileIcon" class="inline-block">
                     <img src="../img/baseProfil.png" alt="Profil" class="h-8">
                 </a>
-
-                <!-- Menu déroulant caché par défaut -->
-                <div id="profileMenu" class="absolute right-0 mt-2 w-48 bg-white text-gray-700 shadow-lg rounded hidden">
-                    <a id="loginOrLogoutLink" class="block px-4 py-2 hover:bg-gray-200" href="#">
-                        <!-- On mettra le texte “Se connecter” ou “Se déconnecter” en JS -->
-                    </a>
+                <div id="profileMenu" class="absolute right-0 mt-2 w-48 bg-white text-gray-700 shadow-lg rounded hidden font-[\'Merriweather\']">
+                    <a id="loginOrLogoutLink" class="block px-4 py-2 hover:bg-gray-200" href="#"></a>
                 </div>
             </div>
-
         </div>
     </div>
 </header>
 
-<main class="flex-grow">
+<main class="flex-grow font-[\'Merriweather\']">
     <div class="container mx-auto py-10">
         <div id="product-list" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    </div>
+        </div>
 </main>
 
-<footer class="bg-[#81A969] text-white text-center py-4">
+<footer class="bg-[#81A969] text-white text-center py-4 font-[\'Merriweather\']">
     <p>&copy; 2025 Réstore - Tous droits réservés - <a href="mailto:contact@fly.fr" class="underline">Contactez-nous</a></p>
 </footer>
 
-<!-- Menu latéral du panier -->
 <div id="cartPanel" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50">
-    <div class="p-4 flex justify-between items-center border-b">
+    <div class="p-4 flex justify-between items-center border-b font-[\'Merriweather\']">
         <h2 class="text-xl font-bold">Votre Panier</h2>
-        <!-- Bouton de fermeture -->
         <button id="closeCart" class="text-2xl leading-none">&times;</button>
     </div>
     <div class="p-4 overflow-y-auto" style="height: calc(100% - 140px);">
-        <!-- Contenu du panier -->
-        <p>Aucun produit dans le panier.</p>
+        <p class="font-[\'Merriweather\']">Aucun produit dans le panier.</p>
     </div>
     <div class="absolute bottom-0 left-0 w-full p-4 border-t">
         <a href="/commander">
-        <button class="w-full bg-[#095434] text-white py-2 rounded hover:bg-[#073920] transition">Commander</button>
+            <button class="w-full bg-[#095434] text-white py-2 rounded hover:bg-[#073920] transition font-[\'Merriweather\']">Commander</button>
         </a>
     </div>
 </div>
 
 <div id="successModal"
-     class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+     class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden font-[\'Merriweather\']">
     <div class="bg-white p-6 rounded shadow-md text-center max-w-sm w-full">
         <span class="text-green-600 text-6xl">✔️</span>
         <h2 class="text-xl font-bold my-4">Commande validée !</h2>
         <p class="mb-4">Votre commande a bien été effectuée.</p>
-        <button id="closeModalBtn" class="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-            Fermer
-        </button>
+        <button id="closeModalBtn" class="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Fermer</button>
     </div>
 </div>
 
 </body>
-<script src="https://cdn.jsdelivr.net/npm/jwt-decode@3/build/jwt-decode.min.js"></script>
-<script>
-    // index.js
-
-    // On attend que le DOM soit complètement chargé
-    document.addEventListener("DOMContentLoaded", function () {
-        // --- Fonctionnalités liées au panier ---
-        const cartIcon = document.getElementById("cartIcon");
-        const cartPanel = document.getElementById("cartPanel");
-        const closeCart = document.getElementById("closeCart");
-        const successModal = document.getElementById("successModal");
-        const closeModalBtn = document.getElementById("closeModalBtn");
-
-        fetch('/api/auth/profile', {
-            method: 'GET',
-            // Si nécessaire, ajoutez `credentials: 'include'` pour envoyer les cookies (souvent utile en développement)
-            credentials: 'include'
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erreur lors de la récupération du profil');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log("ID de l'utilisateur connecté :", data.id);
-                // Vous pouvez utiliser data.id pour personnaliser l'affichage ou stocker l'information
-            })
-            .catch(error => {
-                console.error(error);
-            });
-
-        // Ouvrir le menu lors du clic sur l'icône du panier
-        cartIcon.addEventListener("click", function (e) {
-            e.preventDefault();
-            cartPanel.classList.remove("translate-x-full");
-        });
-
-        // Fermer le menu lors du clic sur fermeture
-        closeCart.addEventListener("click", function () {
-            cartPanel.classList.add("translate-x-full");
-        });
-
-        // Fermer le menu si l'utilisateur clique en dehors du panneau
-        document.addEventListener("click", function (event) {
-            if (!cartPanel.contains(event.target) && !cartIcon.contains(event.target)) {
-                cartPanel.classList.add("translate-x-full");
-            }
-        });
-
-        // Gestion du modal de succès de commande
-        const params = new URLSearchParams(window.location.search);
-        if (params.get("commandeSuccess") === "true") {
-            successModal.classList.remove("hidden");
-        }
-
-        closeModalBtn.addEventListener("click", function () {
-            successModal.classList.add("hidden");
-            history.replaceState({}, "", window.location.pathname);
-        });
-
-        // --- Récupération et affichage des produits ---
-        const productListContainer = document.getElementById("product-list");
-        if (productListContainer) {
-            fetch("/products")
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error("Erreur lors de la récupération des produits");
-                    }
-                    return response.json();
-                })
-                .then((products) => {
-                    // Pour chaque produit, créer une carte et l'ajouter au conteneur
-                    products.forEach((product) => {
-                        const card = document.createElement("div");
-                        card.classList.add("bg-white", "shadow", "rounded", "p-4", "mb-4");
-                        card.innerHTML = `
-    <img src="${product.imagepath}" alt="${product.name}" class="w-full h-auto mb-2">
-    <h3 class="text-xl font-bold">${product.name}</h3>
-    <p class="text-gray-600">${product.description || ""}</p>
-    <p class="text-green-600 font-bold">${product.price} €</p>
-    <p class="text-gray-500">Stock: ${product.stock}</p>
-  `;
-                        productListContainer.appendChild(card);
-                    });
-                })
-                .catch((error) => {
-                    console.error("Erreur lors du fetch des produits:", error);
-                    productListContainer.innerHTML =
-                        "<p class='text-red-600'>Impossible de charger les produits.</p>";
-                });
-        }
-
-        const profileIcon = document.getElementById("profileIcon");
-        const profileMenu = document.getElementById("profileMenu");
-        const loginOrLogoutLink = document.getElementById("loginOrLogoutLink");
-
-        // Vérifier si l'utilisateur est connecté
-        fetch("/api/is-logged-in", { credentials: "include" })
-            .then(res => res.json())
-            .then(data => {
-                if (data.loggedIn) {
-                    // Connecté => “Se déconnecter”
-                    loginOrLogoutLink.textContent = "Se déconnecter";
-                    // On veut, au clic, appeler /api/auth/logout puis recharger la page
-                    loginOrLogoutLink.addEventListener("click", (e) => {
-                        e.preventDefault();
-                        fetch("/api/auth/logout")
-                            .then(() => {
-                                // On recharge la page, ou on redirige vers '/'
-                                window.location.reload();
-                            })
-                            .catch(err => console.error("Erreur logout:", err));
-                    });
-                } else {
-                    // Non connecté => “Se connecter”
-                    loginOrLogoutLink.textContent = "Se connecter";
-                    // On met un href = "/login"
-                    loginOrLogoutLink.setAttribute("href", "/login");
-                }
-            })
-            .catch(err => {
-                console.error("Erreur is-logged-in:", err);
-                // Par défaut, on propose “Se connecter”
-                loginOrLogoutLink.textContent = "Se connecter";
-                loginOrLogoutLink.href = "/login";
-            });
-
-        // Clic sur l’icône => toggle du menu
-        profileIcon.addEventListener("click", (e) => {
-            e.preventDefault();
-            profileMenu.classList.toggle("hidden");
-        });
-
-        // Fermer le menu si clic en dehors
-        document.addEventListener("click", (event) => {
-            if (!profileMenu.contains(event.target) && !profileIcon.contains(event.target)) {
-                profileMenu.classList.add("hidden");
-            }
-        });
-    });
-
-</script>
-
 </html>
