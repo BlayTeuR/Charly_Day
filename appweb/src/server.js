@@ -39,6 +39,7 @@ const userRoutes = require('./backend/routes/userRoutes');
 const {authenticate} = require("./backend/middlewares/auth");
 app.use('/users', userRoutes);
 
+app.use('/img', express.static(path.join(__dirname, 'img')));
 
 // Route GET pour sevir les différentes page de l'applicaton
 app.get('/register', (req, res) => {
