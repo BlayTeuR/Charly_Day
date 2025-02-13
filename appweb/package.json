@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "start": "node server.js",
     "build:css": "tailwindcss -i ./src/styles.css -o ./dist/styles.css --watch"
   },
   "keywords": [],
