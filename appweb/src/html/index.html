@@ -29,15 +29,6 @@
         .dropdown-menu {
             display: none;
         }
-        @keyframes blink-white {
-            0% { filter: brightness(1); }
-            50% { filter: brightness(2); }
-            100% { filter: brightness(1); }
-        }
-
-        .blink-white {
-            animation: blink-white 1s ease-in-out;
-        }
     </style>
 </head>
 <body class="bg-white text-[#095434] min-h-screen flex flex-col">
@@ -195,6 +186,7 @@
         const commanderButton = document.getElementById("commanderButton");
         if (commanderButton) {
             commanderButton.addEventListener("click", function (e) {
+                event.stopPropagation();
                 // Vide le panier
                 localStorage.removeItem("cart");
                 updateCartDisplay();
@@ -298,7 +290,11 @@
             cart.push({ productId, quantity });
         }
         localStorage.setItem("cart", JSON.stringify(cart));
-        console.log("Panier mis à jour :", cart);
+        const cartIcon = document.getElementById("cartIcon");
+        cartIcon.classList.add("animate-bounce");
+        setTimeout(() => {
+            cartIcon.classList.remove("animate-bounce");
+        }, 1000);
         updateCartDisplay();
     }
 
@@ -337,6 +333,7 @@
                     minusButton.textContent = "-";
                     minusButton.classList.add("bg-gray-200", "px-2", "py-1", "rounded", "hover:bg-gray-300");
                     minusButton.addEventListener("click", () => {
+                        event.stopPropagation(); // Empêche la fermeture du panier
                         updateCartItem(product.id, -1);
                     });
 
@@ -350,6 +347,7 @@
                     plusButton.textContent = "+";
                     plusButton.classList.add("bg-gray-200", "px-2", "py-1", "rounded", "hover:bg-gray-300");
                     plusButton.addEventListener("click", () => {
+                        event.stopPropagation();
                         updateCartItem(product.id, 1);
                     });
 
