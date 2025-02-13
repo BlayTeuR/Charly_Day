@@ -35,6 +35,10 @@ app.use('/api/auth', authRoutes);
 const productRoutes = require('./backend/routes/productRoutes');
 app.use('/products', productRoutes);
 
+const orderRoutes = require('./backend/routes/orderRoutes');
+app.use('/orders', orderRoutes);
+
+
 app.use('/img_server', express.static(path.join(__dirname, '../img_server')));
 
 const cartRoutes = require('./backend/routes/cartRoutes');
