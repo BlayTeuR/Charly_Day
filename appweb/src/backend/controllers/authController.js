@@ -1,6 +1,7 @@
 const db = require('../../database/db');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const {getUserByEmail} = require("../models/user");
 
 const login = async (req, res) => {
     try {
@@ -9,13 +10,7 @@ const login = async (req, res) => {
             return res.status(400).json({ message: 'Veuillez fournir un email et un mot de passe' });
         }
 
-        // Rechercher l'utilisateur par email
-        const query = 'SELECT * FROM users WHERE email = $1';
-        const { rows } = await db.query(query, [email]);
-        if (rows.length === 0) {
-            return res.status(401).json({ message: 'Utilisateur non trouvé' });
-        }
-        const user = rows[0];
+        const user = getUserByEmail(email);
 
         // Comparer le mot de passe envoyé avec le hash stocké
         const isValid = await bcrypt.compare(password, user.password);
