@@ -75,6 +75,13 @@
                 <a href="#" id="profileIcon" class="inline-block">
                     <img src="../img/baseProfil.png" alt="Profil" class="h-8">
                 </a>
+
+                <!-- Menu déroulant caché par défaut -->
+                <div id="profileMenu" class="absolute right-0 mt-2 w-48 bg-white text-gray-700 shadow-lg rounded hidden">
+                    <a id="loginOrLogoutLink" class="block px-4 py-2 hover:bg-gray-200" href="#">
+                        <!-- On mettra le texte “Se connecter” ou “Se déconnecter” en JS -->
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -125,6 +132,53 @@
     document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("home_button").addEventListener("click", function () {
             window.location.href = "/";  // Redirige vers la page à propos
+        });
+        const profileIcon = document.getElementById("profileIcon");
+        const profileMenu = document.getElementById("profileMenu");
+        const loginOrLogoutLink = document.getElementById("loginOrLogoutLink");
+
+        // Vérifier si l'utilisateur est connecté
+        fetch("/api/is-logged-in", { credentials: "include" })
+            .then(res => res.json())
+            .then(data => {
+                if (data.loggedIn) {
+                    // Connecté => “Se déconnecter”
+                    loginOrLogoutLink.textContent = "Se déconnecter";
+                    // On veut, au clic, appeler /api/auth/logout puis recharger la page
+                    loginOrLogoutLink.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        fetch("/api/auth/logout")
+                            .then(() => {
+                                // On recharge la page, ou on redirige vers '/'
+                                window.location.reload();
+                            })
+                            .catch(err => console.error("Erreur logout:", err));
+                    });
+                } else {
+                    // Non connecté => “Se connecter”
+                    loginOrLogoutLink.textContent = "Se connecter";
+                    // On met un href = "/login"
+                    loginOrLogoutLink.setAttribute("href", "/login");
+                }
+            })
+            .catch(err => {
+                console.error("Erreur is-logged-in:", err);
+                // Par défaut, on propose “Se connecter”
+                loginOrLogoutLink.textContent = "Se connecter";
+                loginOrLogoutLink.href = "/login";
+            });
+
+        // Clic sur l’icône => toggle du menu
+        profileIcon.addEventListener("click", (e) => {
+            e.preventDefault();
+            profileMenu.classList.toggle("hidden");
+        });
+
+        // Fermer le menu si clic en dehors
+        document.addEventListener("click", (event) => {
+            if (!profileMenu.contains(event.target) && !profileIcon.contains(event.target)) {
+                profileMenu.classList.add("hidden");
+            }
         });
     });
 </script>
