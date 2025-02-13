@@ -5,41 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Réstore</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@400;700&display=swap" rel="stylesheet">
     <style>
         .hidden-checkbox {
             display: none;
         }
+
         #announcementToggle:checked + #announcement {
             display: none;
         }
+
         .dropdown:hover .dropdown-menu {
             display: block;
         }
+
         .dropdown-menu {
             display: none;
         }
     </style>
 </head>
-<body class="bg-white text-[#095434] min-h-screen flex flex-col font-[\'Merriweather\']">
+<body class="bg-white text-[#095434] min-h-screen flex flex-col">
 
 <input type="checkbox" id="announcementToggle" class="hidden-checkbox">
 
 <div id="announcement" class="bg-gray-200 text-[#095434] text-center text-sm py-2 relative">
     Livraison en 5 à 10 jours ouvrés | Retrait gratuit en magasin
-    <label for="announcementToggle" class="absolute top-0 right-0 mt-1 mr-2 text-gray-600 hover:text-gray-800 cursor-pointer">
+    <label for="announcementToggle"
+           class="absolute top-0 right-0 mt-1 mr-2 text-gray-600 hover:text-gray-800 cursor-pointer">
         &times;
     </label>
 </div>
 
-<header class="bg-[#81A969] text-white shadow-lg font-[\'Merriweather\']">
+<header class="bg-[#81A969] text-white shadow-lg">
     <div class="container mx-auto flex items-center justify-between pt-2 px-6">
         <div class="flex items-center">
             <img src="../img/logo_1_vert_foncé.png" alt="Réstore Logo" class="h-20 pl-10">
         </div>
         <nav class="flex space-x-8">
             <div class="dropdown relative">
-                <button class="px-4 py-2 font-semibold underline hover:text-[#095434] transition duration-200">Accueil</button>
+                <button class="px-4 py-2 font-semibold underline hover:text-[#095434] transition duration-200">Accueil
+                </button>
             </div>
             <div class="dropdown relative">
                 <button class="px-4 py-2 font-semibold hover:text-[#095434] transition duration-200">Produits</button>
@@ -54,60 +59,153 @@
         </nav>
         <div class="flex items-center space-x-4">
             <div class="relative">
-                <input type="text" placeholder="Rechercher..." class="px-4 py-2 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-[#095434] font-[\'Merriweather\']">
-                <svg class="w-5 h-5 absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M12.9 14.32a8 8 0 111.414-1.414l4.387 4.387a1 1 0 01-1.414 1.414l-4.387-4.387zM14 8a6 6 0 11-12 0 6 6 0 0112 0z" clip-rule="evenodd"></path>
+                <input type="text" placeholder="Rechercher..."
+                       class="px-4 py-2 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-[#095434]">
+                <svg class="w-5 h-5 absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+                     fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                          d="M12.9 14.32a8 8 0 111.414-1.414l4.387 4.387a1 1 0 01-1.414 1.414l-4.387-4.387zM14 8a6 6 0 11-12 0 6 6 0 0112 0z"
+                          clip-rule="evenodd"></path>
                 </svg>
             </div>
             <a href="#" id="cartIcon">
                 <img src="../img/cart.png" alt="Panier" class="h-8">
             </a>
-            <div class="relative">
-                <a href="#" id="profileIcon" class="inline-block">
-                    <img src="../img/baseProfil.png" alt="Profil" class="h-8">
-                </a>
-                <div id="profileMenu" class="absolute right-0 mt-2 w-48 bg-white text-gray-700 shadow-lg rounded hidden font-[\'Merriweather\']">
-                    <a id="loginOrLogoutLink" class="block px-4 py-2 hover:bg-gray-200" href="#"></a>
-                </div>
-            </div>
         </div>
     </div>
 </header>
 
-<main class="flex-grow font-[\'Merriweather\']">
+<main class="flex-grow">
     <div class="container mx-auto py-10">
-        <div id="product-list" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        </div>
+        <div id="product-list" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+    </div>
 </main>
 
-<footer class="bg-[#81A969] text-white text-center py-4 font-[\'Merriweather\']">
-    <p>&copy; 2025 Réstore - Tous droits réservés - <a href="mailto:contact@fly.fr" class="underline">Contactez-nous</a></p>
+<footer class="bg-[#81A969] text-white text-center py-4">
+    <p>&copy; 2025 Réstore - Tous droits réservés - <a href="mailto:contact@fly.fr" class="underline">Contactez-nous</a>
+    </p>
 </footer>
 
-<div id="cartPanel" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50">
-    <div class="p-4 flex justify-between items-center border-b font-[\'Merriweather\']">
+<!-- Menu latéral du panier -->
+<div id="cartPanel"
+     class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+    <div class="p-4 flex justify-between items-center border-b">
         <h2 class="text-xl font-bold">Votre Panier</h2>
+        <!-- Bouton de fermeture -->
         <button id="closeCart" class="text-2xl leading-none">&times;</button>
     </div>
     <div class="p-4 overflow-y-auto" style="height: calc(100% - 140px);">
-        <p class="font-[\'Merriweather\']">Aucun produit dans le panier.</p>
+        <!-- Contenu du panier -->
+        <p>Aucun produit dans le panier.</p>
     </div>
     <div class="absolute bottom-0 left-0 w-full p-4 border-t">
         <a href="/commander">
-            <button class="w-full bg-[#095434] text-white py-2 rounded hover:bg-[#073920] transition font-[\'Merriweather\']">Commander</button>
+            <button class="w-full bg-[#095434] text-white py-2 rounded hover:bg-[#073920] transition">Commander</button>
         </a>
     </div>
 </div>
 
 <div id="successModal"
-     class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden font-[\'Merriweather\']">
+     class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
     <div class="bg-white p-6 rounded shadow-md text-center max-w-sm w-full">
         <span class="text-green-600 text-6xl">✔️</span>
         <h2 class="text-xl font-bold my-4">Commande validée !</h2>
         <p class="mb-4">Votre commande a bien été effectuée.</p>
-        <button id="closeModalBtn" class="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Fermer</button>
+        <button id="closeModalBtn" class="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+            Fermer
+        </button>
     </div>
 </div>
 
 </body>
+
+<script>
+    import * as tailwind from "dotenv";
+
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: {
+                    sans: ['"Merriweather Sans"', 'sans-serif'],
+                }
+            }
+        }
+    }
+</script>
+
+<script>
+    // index.js
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // --- Fonctionnalités liées au panier ---
+        const cartIcon = document.getElementById("cartIcon");
+        const cartPanel = document.getElementById("cartPanel");
+        const closeCart = document.getElementById("closeCart");
+        const successModal = document.getElementById("successModal");
+        const closeModalBtn = document.getElementById("closeModalBtn");
+
+        // Ouvrir le menu lors du clic sur l'icône du panier
+        cartIcon.addEventListener("click", function (e) {
+            e.preventDefault();
+            cartPanel.classList.remove("translate-x-full");
+        });
+
+        // Fermer le menu lors du clic sur fermeture
+        closeCart.addEventListener("click", function () {
+            cartPanel.classList.add("translate-x-full");
+        });
+
+        // Fermer le menu si l'utilisateur clique en dehors du panneau
+        document.addEventListener("click", function (event) {
+            if (!cartPanel.contains(event.target) && !cartIcon.contains(event.target)) {
+                cartPanel.classList.add("translate-x-full");
+            }
+        });
+
+        // Gestion du modal de succès de commande
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("commandeSuccess") === "true") {
+            successModal.classList.remove("hidden");
+        }
+
+        closeModalBtn.addEventListener("click", function () {
+            successModal.classList.add("hidden");
+            history.replaceState({}, "", window.location.pathname);
+        });
+
+        // Récupération et affichage des produits
+        const productListContainer = document.getElementById("product-list");
+        if (productListContainer) {
+            fetch("/products")
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Erreur lors de la récupération des produits");
+                    }
+                    return response.json();
+                })
+                .then((products) => {
+                    // Pour chaque produit, créer une carte et l'ajouter au conteneur
+                    products.forEach((product) => {
+                        const card = document.createElement("div");
+                        card.classList.add("bg-white", "shadow", "rounded", "p-4", "mb-4");
+                        card.innerHTML = `
+    <img src="${product.imagepath}" alt="${product.name}" class="w-full h-auto mb-2">
+    <h3 class="text-xl font-bold">${product.name}</h3>
+    <p class="text-gray-600">${product.description || ""}</p>
+    <p class="text-green-600 font-bold">${product.price} €</p>
+    <p class="text-gray-500">Stock: ${product.stock}</p>
+  `;
+                        productListContainer.appendChild(card);
+                    });
+                })
+                .catch((error) => {
+                    console.error("Erreur lors du fetch des produits:", error);
+                    productListContainer.innerHTML =
+                        "<p class='text-red-600'>Impossible de charger les produits.</p>";
+                });
+        }
+    });
+
+</script>
+
 </html>
