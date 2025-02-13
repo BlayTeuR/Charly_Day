@@ -121,7 +121,7 @@
 </div>
 
 </body>
-
+<script src="https://cdn.jsdelivr.net/npm/jwt-decode@3/build/jwt-decode.min.js"></script>
 <script>
     import * as tailwind from "dotenv";
 
@@ -147,6 +147,25 @@
         const closeCart = document.getElementById("closeCart");
         const successModal = document.getElementById("successModal");
         const closeModalBtn = document.getElementById("closeModalBtn");
+
+        fetch('/api/auth/profile', {
+            method: 'GET',
+            // Si nécessaire, ajoutez `credentials: 'include'` pour envoyer les cookies (souvent utile en développement)
+            credentials: 'include'
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la récupération du profil');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("ID de l'utilisateur connecté :", data.id);
+                // Vous pouvez utiliser data.id pour personnaliser l'affichage ou stocker l'information
+            })
+            .catch(error => {
+                console.error(error);
+            });
 
         // Ouvrir le menu lors du clic sur l'icône du panier
         cartIcon.addEventListener("click", function (e) {
