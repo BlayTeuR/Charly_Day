@@ -42,7 +42,7 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
     try {
-        const { email, password, confirm_password, situation } = req.body;
+        const { first_name, last_name, email, password, confirm_password, situation } = req.body;
 
         // Vérifier que l'email, le mot de passe et la confirmation sont fournis
         if (!email || !password || !confirm_password) {
@@ -69,11 +69,11 @@ const register = async (req, res) => {
 
         // Insérer le nouvel utilisateur dans la base de données
         const insertQuery = `
-            INSERT INTO users (email, hash_password, situation)
-            VALUES ($1, $2, $3)
+            INSERT INTO users (first_name, last_name, email, hash_password, situation)
+            VALUES ($1, $2, $3, $4, $5)
             RETURNING *
         `;
-        const result = await db.query(insertQuery, [email, hashedPassword, userSituation]);
+        const result = await db.query(insertQuery, [first_name, last_name, email, hashedPassword, userSituation]);
         const newUser = result.rows[0];
 
         // Déterminer le rôle pour le token
