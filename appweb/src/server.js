@@ -5,7 +5,13 @@ const app = express();
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
 
+app.use(cors({
+    origin: 'https://charly-day.onrender.com',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // Middleware pour parser le JSON
 app.use(express.json());
