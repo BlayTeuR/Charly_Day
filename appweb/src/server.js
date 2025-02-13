@@ -25,7 +25,7 @@ const adminRoutes = require('./backend/routes/admin');
 app.use('/api/admin', adminRoutes);
 
 // Routes Back-office
-const productRoutes = require('./backend/routes/product');
+const productRoutes = require('./backend/routes/productRoutes');
 app.use('/backoffice/products', productRoutes);
 
 

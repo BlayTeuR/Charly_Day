@@ -1,87 +1,71 @@
-const {
-    createProduct,
-    getProductById,
-    getAllProducts,
-    updateProduct,
-    deleteProduct
-} = require('../models/product');
+const pool = require('../../database/db');
 
-// Créer un produit
-const addProduct = async (req, res) => {
+// ➤ 1. Ajouter un produit
+exports.createProduct = async (req, res) => {
     try {
-        const { name, description, price, stock } = req.body;
-        if (!name || !price) {
-            return res.status(400).json({ message: "Le nom et le prix sont obligatoires." });
-        }
-        const product = await createProduct({ name, description, price, stock });
-        res.status(201).json(product);
+        const { name, description, imagepath, price, stock, category } = req.body;
+        const result = await pool.query(
+            'INSERT INTO products (name, description, imagepath, price, stock, category) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+            [name, description, imagepath, price, stock, category]
+        );
+        res.status(201).json(result.rows[0]);
     } catch (error) {
-        console.error("Erreur lors de la création du produit :", error);
-        res.status(500).json({ message: "Erreur interne du serveur." });
+        res.status(500).json({ error: error.message });
     }
 };
 
-// Récupérer un produit par son id
-const getProduct = async (req, res) => {
+// ➤ 2. Récupérer tous les produits
+exports.getAllProducts = async (req, res) => {
     try {
-        const { id } = req.params;
-        const product = await getProductById(id);
-        if (!product) {
-            return res.status(404).json({ message: "Produit non trouvé." });
-        }
-        res.json(product);
+        const result = await pool.query('SELECT * FROM products');
+        res.json(result.rows);
     } catch (error) {
-        console.error("Erreur lors de la récupération du produit :", error);
-        res.status(500).json({ message: "Erreur interne du serveur." });
+        res.status(500).json({ error: error.message });
     }
 };
 
-// Lister tous les produits
-const listProducts = async (req, res) => {
-    try {
-        const products = await getAllProducts();
-        res.json(products);
-    } catch (error) {
-        console.error("Erreur lors de la récupération de la liste des produits :", error);
-        res.status(500).json({ message: "Erreur interne du serveur." });
-    }
-};
-
-// Mettre à jour un produit
-const updateProductController = async (req, res) => {
+// ➤ 3. Récupérer un produit par ID
+exports.getProductById = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, description, price, stock } = req.body;
-        const product = await updateProduct(id, { name, description, price, stock });
-        if (!product) {
-            return res.status(404).json({ message: "Produit non trouvé." });
+        const result = await pool.query('SELECT * FROM products WHERE id = $1', [id]);
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Produit non trouvé' });
         }
-        res.json(product);
+        res.json(result.rows[0]);
     } catch (error) {
-        console.error("Erreur lors de la mise à jour du produit :", error);
-        res.status(500).json({ message: "Erreur interne du serveur." });
+        res.status(500).json({ error: error.message });
     }
 };
 
-// Supprimer un produit
-const deleteProductController = async (req, res) => {
+// ➤ 4. Modifier un produit
+exports.updateProduct = async (req, res) => {
     try {
         const { id } = req.params;
-        const product = await deleteProduct(id);
-        if (!product) {
-            return res.status(404).json({ message: "Produit non trouvé." });
+        const { name, description, imagepath, price, stock, category } = req.body;
+        const result = await pool.query(
+            'UPDATE products SET name = $1, description = $2, imagepath = $3, price = $4, stock = $5, category = $6 WHERE id = $7 RETURNING *',
+            [name, description, imagepath, price, stock, category, id]
+        );
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Produit non trouvé' });
         }
-        res.json({ message: "Produit supprimé.", product });
+        res.json(result.rows[0]);
     } catch (error) {
-        console.error("Erreur lors de la suppression du produit :", error);
-        res.status(500).json({ message: "Erreur interne du serveur." });
+        res.status(500).json({ error: error.message });
     }
 };
 
-module.exports = {
-    addProduct,
-    getProduct,
-    listProducts,
-    updateProductController,
-    deleteProductController
+// ➤ 5. Supprimer un produit
+exports.deleteProduct = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await pool.query('DELETE FROM products WHERE id = $1 RETURNING *', [id]);
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Produit non trouvé' });
+        }
+        res.json({ message: 'Produit supprimé', product: result.rows[0] });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 };
