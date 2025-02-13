@@ -3,10 +3,10 @@ const pool = require('../../database/db');
 // ➤ 1. Créer un utilisateur
 exports.createUser = async (req, res) => {
     try {
-        const { email, hash_password, admin, situation } = req.body;
+        const { first_name, last_name, email, hash_password, admin, situation } = req.body;
         const result = await pool.query(
-            'INSERT INTO users (email, hash_password, admin, situation) VALUES ($1, $2, $3, $4) RETURNING *',
-            [email, hash_password, admin, situation]
+            'INSERT INTO users (first_name, last_name, email, hash_password, admin, situation) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+            [first_name, last_name, email, hash_password, admin, situation]
         );
         res.status(201).json(result.rows[0]);
     } catch (error) {
@@ -42,10 +42,10 @@ exports.getUserById = async (req, res) => {
 exports.updateUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const { email, hash_password, admin, situation } = req.body;
+        const { first_name, last_name, email, hash_password, admin, situation } = req.body;
         const result = await pool.query(
-            'UPDATE users SET email = $1, hash_password = $2, admin = $3, situation = $4 WHERE id = $5 RETURNING *',
-            [email, hash_password, admin, situation, id]
+            'UPDATE users SET first_name = $1, last_name = $2, email = $3, hash_password = $4, admin = $5, situation = $6 WHERE id = $7 RETURNING *',
+            [first_name, last_name, email, hash_password, admin, situation, id]
         );
         if (result.rows.length === 0) {
             return res.status(404).json({ error: 'Utilisateur non trouvé' });
