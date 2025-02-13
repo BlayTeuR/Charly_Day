@@ -107,11 +107,11 @@ const register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Définir la situation
-        const userSituation = typeof situation === 'boolean' ? situation : false;
+        const userSituation = typeof professionnel === 'boolean' ? professionnel : false;
 
         // Insertion en BDD
         const insertQuery = `
-      INSERT INTO users (first_name, last_name, email, hash_password, situation)
+      INSERT INTO users (first_name, last_name, email, hash_password, professionnel)
       VALUES ($1, $2, $3, $4, $5)
       RETURNING *
     `;
@@ -119,7 +119,7 @@ const register = async (req, res) => {
         const newUser = result.rows[0];
 
         // Rôle (admin ou client)
-        const userRole = newUser.admin ? 'admin' : 'client';
+        const userRole = newUser.is_admin ? 'admin' : 'client';
 
         // Générer le token JWT
         const token = jwt.sign(

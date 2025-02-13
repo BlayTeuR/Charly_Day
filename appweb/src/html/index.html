@@ -135,6 +135,25 @@
 
 <script>
     let productsMap = {};
+    let currentUserId = null;
+
+    fetch('/api/auth/profile', {
+        method: 'GET',
+        credentials: 'include'
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erreur lors de la récupération du profil');
+            }
+            return response.json();
+        })
+        .then(data => {
+            currentUserId = data.id;
+            console.log("ID de l'utilisateur connecté :", currentUserId);
+        })
+        .catch(error => {
+            console.error(error);
+        });
     // On attend que le DOM soit complètement chargé
     document.addEventListener("DOMContentLoaded", function () {
 
@@ -149,22 +168,19 @@
                     return response.json();
                 })
                 .then((products) => {
-                    // Pour chaque produit, on le stock et on cree la carte produit
+                    productListContainer.innerHTML = "";
                     products.forEach((product) => {
-                        productsMap[product.id] = product; // stocker les infos pour le panier
-
                         const card = document.createElement("div");
-                        card.classList.add("bg-white", "shadow", "rounded", "p-4", "mb-4");
+                        card.classList.add("bg-white", "shadow-lg", "rounded-xl", "overflow-hidden", "hover:scale-105", "transition-transform", "duration-300");
                         card.innerHTML = `
-          <img src="${product.imagepath}" alt="${product.name}" class="w-full h-auto mb-2">
-          <h3 class="text-xl font-bold">${product.name}</h3>
-          <p class="text-gray-600">${product.description || ""}</p>
-          <p class="text-green-600 font-bold">${product.price} €</p>
-          <p class="text-gray-500">Stock: ${product.stock}</p>
-          <button class="add-to-cart bg-[#095434] text-white py-2 px-4 rounded hover:bg-[#073920] transition mt-2" data-product-id="${product.id}">
-              Ajouter au panier
-          </button>
-        `;
+                        <img src="${product.imagepath}" alt="${product.name}" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-xl font-bold text-[#095434] mb-2">${product.name}</h3>
+                            <p class="text-gray-600 mb-3">${product.description || "Description non disponible"}</p>
+                            <p class="text-green-700 font-bold text-lg mb-4">${product.price} €</p>
+                            <button class="add-to-cart bg-[#095434] w-full text-white py-2 px-4 rounded hover:bg-[#073920] transition" data-product-id="${product.id}">Ajouter au panier</button>
+                        </div>
+                    `;
                         productListContainer.appendChild(card);
                     });
                     document.querySelectorAll('.add-to-cart').forEach(button => {
@@ -186,7 +202,58 @@
         const commanderButton = document.getElementById("commanderButton");
         if (commanderButton) {
             commanderButton.addEventListener("click", function (e) {
+                e.preventDefault();
                 event.stopPropagation();
+
+                if (!currentUserId) {
+                    alert("Vous devez être connecté pour commander.");
+                    return;
+                }
+
+                // Récupérer le panier stocké dans le localStorage
+                const cart = JSON.parse(localStorage.getItem("cart")) || [];
+                if (cart.length === 0) {
+                    alert("Votre panier est vide.");
+                    return;
+                }
+
+                // Pour chaque article du panier, envoyer une requête POST pour l'ajouter au panier côté serveur
+                Promise.all(cart.map(item => {
+                    console.log('userID:' + currentUserId);
+                    console.log('itemId:' + item.productId);
+                    console.log('qty:' + item.quantity);
+                    return fetch("/cart/add", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        credentials: "include",
+                        body: JSON.stringify({
+                            user_id: currentUserId,
+                            product_id: item.productId,
+                            quantity: item.quantity
+                        })
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error("Erreur lors de l'ajout d'un produit au panier");
+                            }
+                            return response.json();
+                        });
+                }))
+                    .then(results => {
+                        console.log("Tous les articles ont été envoyés au serveur :", results);
+                        // Vider le panier côté client
+                        localStorage.removeItem("cart");
+                        updateCartDisplay();
+                        // Rediriger ou afficher une confirmation
+                        window.location.href = "/?commandeSuccess=true";
+                    })
+                    .catch(error => {
+                        console.error("Erreur lors de la commande:", error);
+                        alert("Une erreur est survenue lors de la commande.");
+                    });
+
                 // Vide le panier
                 localStorage.removeItem("cart");
                 updateCartDisplay();

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utilisateurs - Réstore</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-[#095434] min-h-screen flex flex-col">
+<!-- HEADER -->
+<header class="bg-[#81A969] text-white shadow-lg">
+    <div class="container mx-auto flex items-center justify-between pt-2 px-6">
+        <div class="flex items-center">
+            <img src="../img/logo_1_vert_foncé.png" alt="Réstore Logo" class="h-20 pl-10">
+        </div>
+        <nav class="flex space-x-8">
+            <div class="dropdown relative">
+                <button class="px-4 py-2 font-semibold hover:text-[#095434] transition duration-200" id="dashboard_button">Dashboard</button>
+            </div>
+            <div class="dropdown relative">
+                <button class="px-4 py-2 font-semibold underline hover:text-[#095434] transition duration-200">Users</button>
+            </div>
+            <div class="dropdown relative">
+                <button class="px-4 py-2 font-semibold hover:text-[#095434] transition duration-200" id="commandes_button">Commandes</button>
+            </div>
+        </nav>
+        <div class="flex items-center space-x-4">
+            <div class="relative">
+                <p class="px-4 py-2 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-[#095434]">Interface ADMIN</p>
+            </div>
+            <div class="relative">
+                <!-- Icône profil -->
+                <a href="#" id="profileIcon" class="inline-block">
+                    <img src="../img/baseProfil.png" alt="Profil" class="h-8">
+                </a>
+                <!-- Menu profil -->
+                <div id="profileMenu" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden">
+                    <a href="#" id="loginOrLogoutLink" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Se connecter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- MAIN -->
+<main class="flex-grow bg-gray-50">
+    <div class="container mx-auto py-10 px-6">
+        <!-- Container pour la liste des utilisateurs -->
+        <section class="bg-white shadow-lg rounded-lg p-8 mb-10">
+            <h1 class="text-3xl font-bold text-center text-[#095434] mb-6">Liste des Utilisateurs</h1>
+            <!-- Tableau affichant les utilisateurs -->
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prénom</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rôle</th>
+                    </tr>
+                    </thead>
+                    <tbody id="usersTable" class="bg-white divide-y divide-gray-200">
+                    <!-- Les lignes seront générées dynamiquement par JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-[#81A969] text-white text-center py-4">
+    <p>&copy; 2025 Réstore - Tous droits réservés - <a href="mailto:contact@fly.fr" class="underline">Contactez-nous</a></p>
+</footer>
+
+<!-- SCRIPT -->
+<script>
+    // Récupérer et afficher la liste des utilisateurs
+    async function fetchUsers() {
+        try {
+            const response = await fetch('/api/users'); // Assurez-vous que cette route est bien configurée côté backend
+            if (!response.ok) {
+                throw new Error('Erreur lors de la récupération des utilisateurs');
+            }
+            const users = await response.json();
+            populateUsersTable(users);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    function populateUsersTable(users) {
+        const usersTable = document.getElementById('usersTable');
+        usersTable.innerHTML = ''; // Nettoyer le contenu existant
+
+        users.forEach(user => {
+            const tr = document.createElement('tr');
+
+            // Prénom
+            const tdFirstName = document.createElement('td');
+            tdFirstName.className = 'px-6 py-4 whitespace-nowrap text-sm text-gray-900';
+            tdFirstName.textContent = user.first_name || 'N/A';
+            tr.appendChild(tdFirstName);
+
+            // Nom
+            const tdLastName = document.createElement('td');
+            tdLastName.className = 'px-6 py-4 whitespace-nowrap text-sm text-gray-900';
+            tdLastName.textContent = user.last_name || 'N/A';
+            tr.appendChild(tdLastName);
+
+            // Email
+            const tdEmail = document.createElement('td');
+            tdEmail.className = 'px-6 py-4 whitespace-nowrap text-sm text-gray-900';
+            tdEmail.textContent = user.email || 'N/A';
+            tr.appendChild(tdEmail);
+
+            // Rôle
+            const tdRole = document.createElement('td');
+            tdRole.className = 'px-6 py-4 whitespace-nowrap text-sm text-gray-900';
+            // Par exemple, en se basant sur le champ is_admin
+            tdRole.textContent = user.is_admin ? 'Admin' : 'Client';
+            tr.appendChild(tdRole);
+
+            usersTable.appendChild(tr);
+        });
+    }
+
+    // Gestion du menu profil et des redirections
+    document.addEventListener("DOMContentLoaded", function () {
+        // Récupération des utilisateurs
+        fetchUsers();
+
+        // Bouton Dashboard
+        document.getElementById("dashboard_button").addEventListener("click", function () {
+            window.location.href = "/dashboard";
+        });
+
+        // Bouton Commandes
+        document.getElementById("commandes_button").addEventListener("click", function () {
+            window.location.href = "/commandes_admin";
+        });
+
+        // Menu profil
+        const profileIcon = document.getElementById("profileIcon");
+        const profileMenu = document.getElementById("profileMenu");
+        const loginOrLogoutLink = document.getElementById("loginOrLogoutLink");
+
+        // Vérifier si l'utilisateur est connecté
+        fetch("/api/is-logged-in", { credentials: "include" })
+            .then(res => res.json())
+            .then(data => {
+                if (data.loggedIn) {
+                    loginOrLogoutLink.textContent = "Se déconnecter";
+                    loginOrLogoutLink.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        fetch("/api/auth/logout")
+                            .then(() => window.location.reload())
+                            .catch(err => console.error("Erreur logout:", err));
+                    });
+                } else {
+                    loginOrLogoutLink.textContent = "Se connecter";
+                    loginOrLogoutLink.setAttribute("href", "/login");
+                }
+            })
+            .catch(err => {
+                console.error("Erreur is-logged-in:", err);
+                loginOrLogoutLink.textContent = "Se connecter";
+                loginOrLogoutLink.href = "/login";
+            });
+
+        // Toggle du menu profil
+        profileIcon.addEventListener("click", (e) => {
+            e.preventDefault();
+            profileMenu.classList.toggle("hidden");
+        });
+
+        // Fermer le menu en cas de clic en dehors
+        document.addEventListener("click", (event) => {
+            if (!profileMenu.contains(event.target) && !profileIcon.contains(event.target)) {
+                profileMenu.classList.add("hidden");
+            }
+        });
+    });
+</script>
+</body>
+</html>
