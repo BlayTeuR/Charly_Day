@@ -3,36 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Commande - Réstore</title>
+    <title>Commandes Admin - Réstore</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .hidden-checkbox {
-            display: none;
-        }
-        #announcementToggle:checked + #announcement {
-            display: none;
-        }
-        .dropdown:hover .dropdown-menu {
-            display: block;
-        }
-        .dropdown-menu {
-            display: none;
-        }
+        .hidden-checkbox { display: none; }
+        #announcementToggle:checked + #announcement { display: none; }
+        .dropdown:hover .dropdown-menu { display: block; }
+        .dropdown-menu { display: none; }
         @keyframes blink-white {
             0% { filter: brightness(1); }
             50% { filter: brightness(2); }
             100% { filter: brightness(1); }
         }
-
-        .blink-white {
-            animation: blink-white 1s ease-in-out;
-        }
+        .blink-white { animation: blink-white 1s ease-in-out; }
     </style>
 </head>
 <body class="bg-white text-[#095434] min-h-screen flex flex-col">
 
+<!-- Barre d'annonce supérieure -->
 <input type="checkbox" id="announcementToggle" class="hidden-checkbox">
-
 <div id="announcement" class="bg-gray-200 text-[#095434] text-center text-sm py-2 relative">
     Livraison en 5 à 10 jours ouvrés | Retrait gratuit en magasin
     <label for="announcementToggle" class="absolute top-0 right-0 mt-1 mr-2 text-gray-600 hover:text-gray-800 cursor-pointer">
@@ -40,6 +29,7 @@
     </label>
 </div>
 
+<!-- Header -->
 <header class="bg-[#81A969] text-white shadow-lg">
     <div class="container mx-auto flex items-center justify-between pt-2 px-6">
         <div class="flex items-center">
@@ -47,97 +37,148 @@
         </div>
         <nav class="flex space-x-8">
             <div class="dropdown relative">
-                <button class="px-4 py-2 font-semibold  hover:text-[#095434] transition duration-200" id="dashboard_button">Dashboard</button>
+                <button class="px-4 py-2 font-semibold hover:text-[#095434] transition duration-200" id="dashboard_button">
+                    Dashboard
+                </button>
             </div>
             <div class="dropdown relative">
-                <button class="px-4 py-2 font-semibold hover:text-[#095434] transition duration-200" id="users_button">Users</button>
+                <button class="px-4 py-2 font-semibold hover:text-[#095434] transition duration-200" id="users_button">
+                    Users
+                </button>
             </div>
             <div class="dropdown relative">
-                <button class="px-4 py-2 font-semibold underline hover:text-[#095434] transition duration-200">Commandes</button>
+                <button class="px-4 py-2 font-semibold underline hover:text-[#095434] transition duration-200">
+                    Commandes
+                </button>
             </div>
         </nav>
         <div class="flex items-center space-x-4">
             <div class="relative">
-                <p class="px-4 py-2 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-[#095434]">Interface ADMIN</p>
+                <p class="px-4 py-2 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-[#095434]">
+                    Interface ADMIN
+                </p>
             </div>
             <div class="relative">
                 <!-- Icône profil -->
                 <a href="#" id="profileIcon" class="inline-block">
                     <img src="../img/baseProfil.png" alt="Profil" class="h-8">
                 </a>
+                <div id="profileMenu" class="absolute right-0 mt-2 w-48 bg-white text-gray-700 shadow-lg rounded hidden">
+                  <a id="loginOrLogoutLink" class="block px-4 py-2 hover:bg-gray-200" href="#"></a>
+                </div>
             </div>
         </div>
     </div>
 </header>
 
+<!-- Main -->
 <main class="flex-grow bg-gray-50">
     <div class="container mx-auto py-10 px-6">
+        <h2 class="text-2xl font-bold mb-4">Liste des commandes</h2>
 
+        <!-- Zone où afficher les commandes -->
+        <div class="overflow-x-auto bg-white shadow rounded">
+            <table class="min-w-full table-auto" id="ordersTable">
+                <thead>
+                <tr class="bg-gray-100">
+                    <th class="px-4 py-2 border-b">ID</th>
+                    <th class="px-4 py-2 border-b">USER ID</th>
+                    <th class="px-4 py-2 border-b">STATUS</th>
+                    <th class="px-4 py-2 border-b">TOTAL</th>
+                    <th class="px-4 py-2 border-b">CREATED AT</th>
+                </tr>
+                </thead>
+                <tbody id="ordersTableBody"></tbody>
+            </table>
+        </div>
     </div>
 </main>
 
+<!-- Footer -->
 <footer class="bg-[#81A969] text-white text-center py-4">
-    <p>&copy; 2025 Réstore - Tous droits réservés - <a href="mailto:contact@fly.fr" class="underline">Contactez-nous</a></p>
+    <p>&copy; 2025 Réstore - Tous droits réservés -
+        <a href="mailto:contact@fly.fr" class="underline">Contactez-nous</a>
+    </p>
 </footer>
 
-</body>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+        // -- Navigation
         document.getElementById("dashboard_button").addEventListener("click", function () {
-            window.location.href = "/dashboard";  // Redirige vers la page à propos
+            window.location.href = "/dashboard";
+        });
+        document.getElementById("users_button").addEventListener("click", function () {
+            window.location.href = "/users_admin";
         });
 
-        document.getElementById("users_button").addEventListener("click", function () {
-            window.location.href = "/users_admin";  // Redirige vers la page à propos
-        });
+        // -- Récupération des commandes
+        const ordersTableBody = document.getElementById("ordersTableBody");
+
+        fetch("/orders", { credentials: "include" }) // on suppose que /orders renvoie la liste
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error("Erreur lors de la récupération des commandes");
+                }
+                return res.json();
+            })
+            .then((orders) => {
+                // 'orders' est un tableau d'objets
+                orders.forEach((order) => {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+              <td class="px-4 py-2 border-b">${order.id}</td>
+              <td class="px-4 py-2 border-b">${order.user_id}</td>
+              <td class="px-4 py-2 border-b">${order.status}</td>
+              <td class="px-4 py-2 border-b">${order.total}</td>
+              <td class="px-4 py-2 border-b">${new Date(order.created_at).toLocaleString()}</td>
+            `;
+                    ordersTableBody.appendChild(tr);
+                });
+            })
+            .catch((err) => {
+                console.error("Erreur fetch /orders:", err);
+                ordersTableBody.innerHTML = `
+            <tr><td colspan="5" class="text-red-600 px-4 py-2">Impossible de charger les commandes.</td></tr>
+          `;
+            });
 
         const profileIcon = document.getElementById("profileIcon");
         const profileMenu = document.getElementById("profileMenu");
         const loginOrLogoutLink = document.getElementById("loginOrLogoutLink");
 
-        // Vérifier si l'utilisateur est connecté
         fetch("/api/is-logged-in", { credentials: "include" })
-            .then(res => res.json())
-            .then(data => {
-                if (data.loggedIn) {
-                    // Connecté => “Se déconnecter”
-                    loginOrLogoutLink.textContent = "Se déconnecter";
-                    // On veut, au clic, appeler /api/auth/logout puis recharger la page
-                    loginOrLogoutLink.addEventListener("click", (e) => {
-                        e.preventDefault();
-                        fetch("/api/auth/logout")
-                            .then(() => {
-                                // On recharge la page, ou on redirige vers '/'
-                                window.location.reload();
-                            })
-                            .catch(err => console.error("Erreur logout:", err));
-                    });
-                } else {
-                    // Non connecté => “Se connecter”
-                    loginOrLogoutLink.textContent = "Se connecter";
-                    // On met un href = "/login"
-                    loginOrLogoutLink.setAttribute("href", "/login");
-                }
-            })
-            .catch(err => {
-                console.error("Erreur is-logged-in:", err);
-                // Par défaut, on propose “Se connecter”
-                loginOrLogoutLink.textContent = "Se connecter";
-                loginOrLogoutLink.href = "/login";
-            });
-
-        // Clic sur l’icône => toggle du menu
-        profileIcon.addEventListener("click", (e) => {
-            e.preventDefault();
-            profileMenu.classList.toggle("hidden");
-        });
-
-        // Fermer le menu si clic en dehors
-        document.addEventListener("click", (event) => {
-            if (!profileMenu.contains(event.target) && !profileIcon.contains(event.target)) {
-                profileMenu.classList.add("hidden");
+          .then(res => res.json())
+          .then(data => {
+            if (data.loggedIn) {
+              loginOrLogoutLink.textContent = "Se déconnecter";
+              loginOrLogoutLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                fetch("/api/auth/logout")
+                  .then(() => { window.location.reload(); })
+                  .catch(err => console.error("Erreur logout:", err));
+              });
+            } else {
+              loginOrLogoutLink.textContent = "Se connecter";
+              loginOrLogoutLink.setAttribute("href", "/login");
             }
+          })
+          .catch(err => {
+            console.error("Erreur is-logged-in:", err);
+            loginOrLogoutLink.textContent = "Se connecter";
+            loginOrLogoutLink.href = "/login";
+          });
+
+        profileIcon.addEventListener("click", (e) => {
+          e.preventDefault();
+          profileMenu.classList.toggle("hidden");
         });
+        document.addEventListener("click", (event) => {
+          if (!profileMenu.contains(event.target) && !profileIcon.contains(event.target)) {
+            profileMenu.classList.add("hidden");
+          }
+        });
+
     });
 </script>
+</body>
 </html>
