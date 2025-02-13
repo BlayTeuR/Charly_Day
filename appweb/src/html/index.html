@@ -6,15 +6,12 @@
     <title>Réstore</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Masquer l'input checkbox */
         .hidden-checkbox {
             display: none;
         }
-        /* Lorsque la case est cochée, masquer la barre d'annonce */
         #announcementToggle:checked + #announcement {
             display: none;
         }
-        /* Styles pour les menus déroulants */
         .dropdown:hover .dropdown-menu {
             display: block;
         }
@@ -25,50 +22,35 @@
 </head>
 <body class="bg-white text-[#095434] min-h-screen flex flex-col">
 
-<!-- Checkbox cachée pour le toggle -->
 <input type="checkbox" id="announcementToggle" class="hidden-checkbox">
 
-<!-- Barre d'annonce supérieure avec bouton de fermeture -->
 <div id="announcement" class="bg-gray-100 text-[#095434] text-center text-sm py-2 relative">
     Livraison en 5 à 10 jours ouvrés | Retrait gratuit en magasin
-    <!-- Le label agit comme bouton et cible la checkbox -->
     <label for="announcementToggle" class="absolute top-0 right-0 mt-1 mr-2 text-gray-600 hover:text-gray-800 cursor-pointer">
         &times;
     </label>
 </div>
 
-<!-- Header principal -->
 <header class="bg-[#81A969] text-white shadow-lg">
     <div class="container mx-auto flex items-center justify-between pt-2 px-6">
-        <!-- Logo -->
         <div class="flex items-center">
             <img src="../../img/logo_1_vert_foncé.png" alt="Réstore Logo" class="h-20 pl-10">
         </div>
-        <!-- Navigation unique -->
         <nav class="flex space-x-8">
             <div class="dropdown relative">
-                <button class="px-4 py-2 font-semibold hover:bg-[#095434] transition duration-200">Accueil</button>
+                <button class="px-4 py-2 font-semibold hover:text-[#095434] transition duration-200">Accueil</button>
+            </div>
+            <div class="dropdown relative">
+                <button class="px-4 py-2 font-semibold hover:text-[#095434] transition duration-200">Produits</button>
                 <div class="dropdown-menu absolute left-1/2 transform -translate-x-1/2 mt-2 bg-white text-black shadow-lg rounded">
-                    <a href="#" class="block px-4 py-2 hover:text-[#095434]">Nouveautés 1</a>
-                    <a href="#" class="block px-4 py-2 hover:text-[#095434]">Nouveautés 2</a>
+                    <a href="#" class="block px-4 py-2 hover:text-[#095434]">Electroménager</a>
+                    <a href="#" class="block px-4 py-2 hover:text-[#095434]">Mobilier</a>
                 </div>
             </div>
             <div class="dropdown relative">
-                <button class="px-4 py-2 font-semibold hover:bg-[#095434] transition duration-200">Produits</button>
-                <div class="dropdown-menu absolute left-1/2 transform -translate-x-1/2 mt-2 bg-white text-black shadow-lg rounded">
-                    <a href="#" class="block px-4 py-2 hover:text-[#095434]">Collection 1</a>
-                    <a href="#" class="block px-4 py-2 hover:text-[#095434]">Collection 2</a>
-                </div>
-            </div>
-            <div class="dropdown relative">
-                <button class="px-4 py-2 font-semibold hover:bg-[#095434] transition duration-200">A propos</button>
-                <div class="dropdown-menu absolute left-1/2 transform -translate-x-1/2 mt-2 bg-white text-black shadow-lg rounded">
-                    <a href="#" class="block px-4 py-2 hover:text-[#095434]">Décoration 1</a>
-                    <a href="#" class="block px-4 py-2 hover:text-[#095434]">Décoration 2</a>
-                </div>
+                <button class="px-4 py-2 font-semibold hover:text-[#095434] transition duration-200">A propos</button>
             </div>
         </nav>
-        <!-- Zone recherche et panier -->
         <div class="flex items-center space-x-4">
             <div class="relative">
                 <input type="text" placeholder="Rechercher..." class="px-4 py-2 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-[#095434]">
@@ -83,14 +65,11 @@
     </div>
 </header>
 
-<!-- Contenu principal -->
 <main class="flex-grow">
     <div class="container mx-auto py-10">
-        <!-- Votre contenu ici -->
     </div>
 </main>
 
-<!-- Footer -->
 <footer class="bg-[#81A969] text-white text-center py-4">
     <p>&copy; 2025 Réstore - Tous droits réservés - <a href="mailto:contact@fly.fr" class="underline">Contactez-nous</a></p>
 </footer>
