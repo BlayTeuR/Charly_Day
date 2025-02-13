@@ -57,7 +57,7 @@
                 </div>
             </div>
             <div class="dropdown relative">
-                <button class="px-4 py-2 font-semibold hover:text-[#095434] transition duration-200">A propos</button>
+                <button class="px-4 py-2 font-semibold hover:text-[#095434] transition duration-200" id="apropos-button">A propos</button>
             </div>
         </nav>
         <div class="flex items-center space-x-4">
@@ -131,6 +131,7 @@
 </body>
 
 <script>
+
     function addToCart(productId, quantity = 1) {
         // Récupérer le panier existant
         const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -174,6 +175,9 @@
 
     // On attend que le DOM soit complètement chargé
     document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("apropos-button").addEventListener("click", function() {
+            window.location.href = "/apropos";  // Redirige vers la page à propos
+        });
         // --- Fonctionnalités liées au panier ---
         const cartIcon = document.getElementById("cartIcon");
         const cartPanel = document.getElementById("cartPanel");
