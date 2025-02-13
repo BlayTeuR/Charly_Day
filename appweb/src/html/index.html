@@ -86,7 +86,21 @@
         <p>Aucun produit dans le panier.</p>
     </div>
     <div class="absolute bottom-0 left-0 w-full p-4 border-t">
+        <a href="/commander">
         <button class="w-full bg-[#095434] text-white py-2 rounded hover:bg-[#073920] transition">Commander</button>
+        </a>
+    </div>
+</div>
+
+<div id="successModal"
+     class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white p-6 rounded shadow-md text-center max-w-sm w-full">
+        <span class="text-green-600 text-6xl">✔️</span>
+        <h2 class="text-xl font-bold my-4">Commande validée !</h2>
+        <p class="mb-4">Votre commande a bien été effectuée.</p>
+        <button id="closeModalBtn" class="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+            Fermer
+        </button>
     </div>
 </div>
 
@@ -97,6 +111,9 @@
     const cartIcon = document.getElementById('cartIcon');
     const cartPanel = document.getElementById('cartPanel');
     const closeCart = document.getElementById('closeCart');
+    const params = new URLSearchParams(window.location.search);
+    const successModal = document.getElementById('successModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
 
     // Ouvrir le menu latéral lors du clic sur l'icône du panier
     cartIcon.addEventListener('click', function(e) {
@@ -115,6 +132,45 @@
             cartPanel.classList.add('translate-x-full');
         }
     });
+
+    window.addEventListener('DOMContentLoaded', () => {
+        // On récupère les paramètres de l'URL
+        const params = new URLSearchParams(window.location.search);
+        const successModal = document.getElementById('successModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        // Si commandeSuccess = true, on affiche le modale
+        if (params.get('commandeSuccess') === 'true') {
+            successModal.classList.remove('hidden');
+        }
+
+        // Lorsque l'utilisateur clique sur "Fermer"
+        closeModalBtn.addEventListener('click', () => {
+            successModal.classList.add('hidden');
+            // On enlève le paramètre de l'URL (optionnel, pour nettoyer)
+            history.replaceState({}, '', '/');
+        });
+    });
+
+    const jwt = require('jsonwebtoken');
+
+    app.get('/commander', (req, res) => {
+        const token = req.cookies.token;
+        if (!token) {
+            // Pas connecté => redirection vers /login
+            return res.redirect('/login');
+        }
+        try {
+            jwt.verify(token, process.env.JWT_SECRET);
+            // Si le token est valide, on valide la commande
+            // Par exemple, tu peux renvoyer une page de confirmation
+            return res.send('Commande validée !');
+        } catch (err) {
+            // Token invalide ou expiré => renvoi vers /login
+            return res.redirect('/login');
+        }
+    });
+
 </script>
 
 </html>

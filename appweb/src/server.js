@@ -4,6 +4,7 @@ const port = process.env.PORT || 3000;
 const app = express();
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
 
 
 // Middleware pour parser le JSON
@@ -53,13 +54,38 @@ app.get('/login.html', (req, res) => {
     res.redirect('/login');
 });
 
+app.get('/checkout', authenticate, (req, res) => {
+    res.sendFile(path.join(__dirname, 'html', 'checkout.html'));
+});
+
+app.get('/commander', (req, res) => {
+    const token = req.cookies.token;
+    if (!token) {
+        // Pas de token => pas connecté
+        return res.redirect('/login');
+    }
+    try {
+        // Vérifie si le token est valide
+        jwt.verify(token, process.env.JWT_SECRET);
+
+        // Ici, tu peux insérer la commande en base, ou faire toute autre logique.
+        // Une fois la commande validée, on redirige l'utilisateur vers la page d'accueil
+        // avec un paramètre de succès.
+        return res.redirect('/?commandeSuccess=true');
+    } catch (err) {
+        // Token invalide/expiré => redirige vers /login
+        return res.redirect('/login');
+    }
+});
+
+
 
 // Route racine pour vérifier que le serveur fonctionne
-app.get('/index.html', authenticate, (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'html', 'index.html'));
 });
 
-app.get('/', authenticate, (req, res) => {
+app.get('/index.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'html', 'index.html'));
 });
 
