@@ -231,6 +231,50 @@ describe('register', () => {
             message: 'Email déjà utilisé',
         });
     });
+    it('devrait retourner une erreur 400 si le mot de passe est trop court', async () => {
+        const req = {
+            body: {
+                email: 'newuser@example.com',
+                password: '123',  // Mot de passe trop court
+                confirm_password: '123',
+                situation: false,
+            },
+        };
+        const res = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn(),
+        };
+
+        await register(req, res);
+
+        // Vérifier que l'erreur 400 a été renvoyée
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({
+            message: 'Le mot de passe doit contenir au moins 6 caractères',
+        });
+    });
+    it('devrait retourner une erreur 400 si l\'email est invalide', async () => {
+        const req = {
+            body: {
+                email: 'invalid-email',  // Email invalide
+                password: 'password123',
+                confirm_password: 'password123',
+                situation: false,
+            },
+        };
+        const res = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn(),
+        };
+
+        await register(req, res);
+
+        // Vérifier que l'erreur 400 a été renvoyée
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({
+            message: 'L\'email est invalide',
+        });
+    });
     it('devrait retourner une erreur 500 en cas de problème avec l\'insertion de l\'utilisateur', async () => {
         const req = {
             body: {
