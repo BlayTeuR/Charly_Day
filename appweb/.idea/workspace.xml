@@ -11,8 +11,8 @@
       <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/html/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/html/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/html/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/html/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/html/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/html/page_produits.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/html/page_produits.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,12 +70,54 @@
       <recent name="C:\Users\natha\Desktop\CrazyCharlyDay\Charly_Day\appweb\src\backend" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Jest.register.devrait retourner une erreur 400 si l\'email est invalide">
+    <configuration name="login.devrait connecter un utilisateur avec un mot de passe valide et rediriger vers index.html" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/Tests/backend/controllers/authController.test.js" />
+      <test-names>
+        <test-name value="login" />
+        <test-name value="devrait connecter un utilisateur avec un mot de passe valide et rediriger vers index.html" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="register.devrait retourner une erreur 400 si l\'email est invalide" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/Tests/backend/controllers/authController.test.js" />
+      <test-names>
+        <test-name value="register" />
+        <test-name value="devrait retourner une erreur 400 si l\'email est invalide" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="register.devrait retourner une erreur 400 si le mot de passe est trop court" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/Tests/backend/controllers/authController.test.js" />
+      <test-names>
+        <test-name value="register" />
+        <test-name value="devrait retourner une erreur 400 si le mot de passe est trop court" />
+      </test-names>
+      <method v="2" />
+    </configuration>
     <configuration name="page_partenaires.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/appweb/html/page_partenaires.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.register.devrait retourner une erreur 400 si l\'email est invalide" />
+        <item itemvalue="Jest.register.devrait retourner une erreur 400 si le mot de passe est trop court" />
+        <item itemvalue="Jest.login.devrait connecter un utilisateur avec un mot de passe valide et rediriger vers index.html" />
         <item itemvalue="JavaScript Debug.page_partenaires.html" />
       </list>
     </recent_temporary>
