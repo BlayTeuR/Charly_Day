@@ -1,6 +1,26 @@
 const db = require('../../database/db');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+
+function validatePassword(password) {
+    // Au moins 8 caractères, au moins 1 majuscule, au moins 1 caractère spécial
+    const minLength = 8;
+    const uppercaseRegex = /[A-Z]/;         // détecte A-Z
+    const specialCharRegex = /[^A-Za-z0-9]/; // tout sauf lettres/chiffres
+
+    if (password.length < minLength) {
+        return 'Le mot de passe doit contenir au moins 8 caractères.';
+    }
+    if (!uppercaseRegex.test(password)) {
+        return 'Le mot de passe doit contenir au moins une majuscule.';
+    }
+    if (!specialCharRegex.test(password)) {
+        return 'Le mot de passe doit contenir au moins un caractère spécial.';
+    }
+    // Sinon, c'est OK
+    return null;
+}
+
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -58,7 +78,9 @@ const register = async (req, res) => {
 
         // Vérifier que l'email, le mot de passe et la confirmation sont fournis
         if (!email || !password || !confirm_password) {
-            return res.status(400).json({ message: 'Veuillez fournir un email, un mot de passe et confirmer le mot de passe' });
+            return res.status(400).json({
+                message: 'Veuillez fournir un email, un mot de passe et confirmer le mot de passe'
+            });
         }
 
         // Vérifier que les mots de passe correspondent
@@ -66,11 +88,18 @@ const register = async (req, res) => {
             return res.status(400).json({ message: 'Les mots de passe ne correspondent pas' });
         }
 
+        // Vérifier la force du mot de passe (majuscule, spécial, min 8 chars)
+        const passwordError = validatePassword(password);
+        if (passwordError) {
+            // On renvoie un code 400, mais on place le message dans un champ `passwordError`
+            return res.status(400).json({ passwordError });
+        }
+
         // Vérifier si l'utilisateur existe déjà
         const checkQuery = 'SELECT * FROM users WHERE email = $1';
         const { rows } = await db.query(checkQuery, [email]);
         if (rows.length > 0) {
-            // Erreur 400 => Email déjà utilisé
+            // Email déjà utilisé
             return res.status(400).json({ message: 'Cet email est déjà utilisé pour un autre compte' });
         }
 
@@ -82,10 +111,10 @@ const register = async (req, res) => {
 
         // Insertion en BDD
         const insertQuery = `
-            INSERT INTO users (first_name, last_name, email, hash_password, situation)
-            VALUES ($1, $2, $3, $4, $5)
-            RETURNING *
-        `;
+      INSERT INTO users (first_name, last_name, email, hash_password, situation)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING *
+    `;
         const result = await db.query(insertQuery, [first_name, last_name, email, hashedPassword, userSituation]);
         const newUser = result.rows[0];
 
@@ -102,8 +131,9 @@ const register = async (req, res) => {
         // Placer le token dans un cookie
         res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
 
-        // Renvoyer un statut OK + message (ou direct un redirect si tu veux)
+        // Tout est OK => on renvoie 200
         return res.status(200).json({ message: 'Inscription réussie' });
+
     } catch (error) {
         console.error('Erreur lors de l\'inscription:', error);
         return res.status(500).json({ message: 'Erreur interne du serveur' });
