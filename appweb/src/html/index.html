@@ -6,6 +6,7 @@
     <title>Réstore</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../img/favicon.png" type="image/png">
     <style>
         body {
             font-family: 'Merriweather', serif;
@@ -170,6 +171,8 @@
                 .then((products) => {
                     productListContainer.innerHTML = "";
                     products.forEach((product) => {
+                        const id = Number(product.id);
+                        productsMap[id] = product;
                         const card = document.createElement("div");
                         card.classList.add("bg-white", "shadow-lg", "rounded-xl", "overflow-hidden", "hover:scale-105", "transition-transform", "duration-300");
                         card.innerHTML = `
@@ -380,6 +383,8 @@
 
             cart.forEach(item => {
                 // Récupérer les infos du produit à partir d'un mapping global
+                console.log('productsMap:')
+                console.log(productsMap[2])
                 const product = productsMap[item.productId];
                 const itemDiv = document.createElement("div");
                 itemDiv.classList.add("mb-2", "border-b", "pb-2", "flex", "items-center", "space-x-2");
@@ -453,7 +458,7 @@
             localStorage.setItem("cart", JSON.stringify(cart));
 
             // Mettre à jour l'affichage du panier
-            updateCartDisplay();
+            setTimeout(updateCartDisplay, 0);
         }
     }
 
