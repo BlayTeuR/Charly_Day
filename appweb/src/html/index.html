@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Réstore</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@400;700&display=swap" rel="stylesheet">
     <style>
         .hidden-checkbox {
             display: none;
@@ -108,9 +109,23 @@
 </body>
 
 <script>
+    import * as tailwind from "dotenv";
+
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: {
+                    'sans': ['"Merriweather Sans"', 'sans-serif'],
+                    'title': ['"Greycliff"', 'sans-serif'],
+                }
+            }
+        }
+    }
+</script>
+
+<script>
     // index.js
 
-    // On attend que le DOM soit complètement chargé
     document.addEventListener("DOMContentLoaded", function () {
         // --- Fonctionnalités liées au panier ---
         const cartIcon = document.getElementById("cartIcon");
@@ -148,7 +163,7 @@
             history.replaceState({}, "", window.location.pathname);
         });
 
-        // --- Récupération et affichage des produits ---
+        // Récupération et affichage des produits
         const productListContainer = document.getElementById("product-list");
         if (productListContainer) {
             fetch("/products")
