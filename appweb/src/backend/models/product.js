@@ -1,4 +1,4 @@
-const db = require('../config/db');
+const db = require('../../database/db');
 
 // Créer un nouveau produit
 const createProduct = async ({ name, description, price, stock }) => {
