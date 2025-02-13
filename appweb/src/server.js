@@ -125,7 +125,9 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'html', 'index.html'));
 });
 
-
+app.get('/apropos', (req, res) => {
+    res.sendFile(path.join(__dirname, 'html', 'apropos.html'));
+});
 app.listen(port, () => {
     console.log(`Serveur démarré sur le port ${port}`);
 });

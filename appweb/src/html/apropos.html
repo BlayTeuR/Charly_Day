@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À propos - Réstore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .hidden-checkbox {
+            display: none;
+        }
+        #announcementToggle:checked + #announcement {
+            display: none;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        .dropdown-menu {
+            display: none;
+        }
+        @keyframes blink-white {
+            0% { filter: brightness(1); }
+            50% { filter: brightness(2); }
+            100% { filter: brightness(1); }
+        }
+
+        .blink-white {
+            animation: blink-white 1s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-white text-[#095434] min-h-screen flex flex-col">
+
+<input type="checkbox" id="announcementToggle" class="hidden-checkbox">
+
+<div id="announcement" class="bg-gray-200 text-[#095434] text-center text-sm py-2 relative">
+    Livraison en 5 à 10 jours ouvrés | Retrait gratuit en magasin
+    <label for="announcementToggle" class="absolute top-0 right-0 mt-1 mr-2 text-gray-600 hover:text-gray-800 cursor-pointer">
+        &times;
+    </label>
+</div>
+
+<header class="bg-[#81A969] text-white shadow-lg">
+    <div class="container mx-auto flex items-center justify-between pt-2 px-6">
+        <div class="flex items-center">
+            <img src="../img/logo_1_vert_foncé.png" alt="Réstore Logo" class="h-20 pl-10">
+        </div>
+        <nav class="flex space-x-8">
+            <div class="dropdown relative">
+                <button class="px-4 py-2 font-semibold  hover:text-[#095434] transition duration-200" id="home_button">Accueil</button>
+            </div>
+            <div class="dropdown relative">
+                <button class="px-4 py-2 font-semibold hover:text-[#095434] transition duration-200">Produits</button>
+                <div class="dropdown-menu absolute left-1/2 transform -translate-x-1/2 mt-2 bg-white text-black shadow-lg rounded">
+                    <a href="#" class="block px-4 py-2 hover:text-[#095434]">Electroménager</a>
+                    <a href="#" class="block px-4 py-2 hover:text-[#095434]">Mobilier</a>
+                </div>
+            </div>
+            <div class="dropdown relative">
+                <button class="px-4 py-2 font-semibold underline hover:text-[#095434] transition duration-200" id="apropos-button">À propos</button>
+            </div>
+        </nav>
+        <div class="flex items-center space-x-4">
+            <div class="relative">
+                <input type="text" placeholder="Rechercher..." class="px-4 py-2 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-[#095434]">
+                <svg class="w-5 h-5 absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M12.9 14.32a8 8 0 111.414-1.414l4.387 4.387a1 1 0 01-1.414 1.414l-4.387-4.387zM14 8a6 6 0 11-12 0 6 6 0 0112 0z" clip-rule="evenodd"></path>
+                </svg>
+            </div>
+            <a href="#" id="cartIcon">
+                <img src="../img/cart.png" alt="Panier" class="h-8">
+            </a>
+            <div class="relative">
+                <!-- Icône profil -->
+                <a href="#" id="profileIcon" class="inline-block">
+                    <img src="../img/baseProfil.png" alt="Profil" class="h-8">
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="flex-grow bg-gray-50">
+    <div class="container mx-auto py-10 px-6">
+        <section class="bg-white shadow-lg rounded-lg p-8 mb-10">
+            <h1 class="text-3xl font-bold text-center text-[#095434] mb-6">À propos de Réstore</h1>
+            <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                Bienvenue sur Réstore, votre destination en ligne pour des produits de qualité à des prix compétitifs.
+                Nous nous engageons à vous offrir une expérience d'achat fluide, rapide et agréable, tout en vous
+                fournissant des informations détaillées sur chaque article que nous proposons.
+            </p>
+            <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                Notre mission est de rendre les produits électroménagers et le mobilier accessibles à tous, avec une
+                approche responsable et durable. Nous sélectionnons soigneusement chaque produit pour vous garantir
+                une qualité irréprochable, et nous travaillons avec des partenaires fiables pour vous assurer une
+                livraison rapide et un service client exceptionnel.
+            </p>
+            <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                Chez Réstore, nous croyons que chaque achat doit être une expérience positive. C'est pourquoi nous
+                mettons un point d'honneur à vous offrir une plateforme facile à utiliser, un service client à votre
+                écoute et une large gamme de produits adaptés à vos besoins et à votre budget.
+            </p>
+            <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                Si vous avez des questions, des suggestions ou souhaitez en savoir plus, n'hésitez pas à nous
+                contacter. Nous sommes là pour vous aider à faire le meilleur choix et à profiter pleinement de vos
+                achats.
+            </p>
+
+            <!-- Section de remerciement -->
+            <section class="bg-gray-100 p-6 rounded-lg text-center my-8">
+                <h2 class="text-xl font-semibold text-[#095434] mb-4">Un grand merci à nos précieux partenaires :</h2>
+                <p class="text-lg text-gray-700">La Fabrique &nbsp;|&nbsp; De Laine en rêves</p>
+                <p class="text-sm text-gray-500 mt-2">Grâce à leur soutien, Réstore continue de grandir et de vous offrir le meilleur.</p>
+            </section>
+        </section>
+    </div>
+</main>
+
+<footer class="bg-[#81A969] text-white text-center py-4">
+    <p>&copy; 2025 Réstore - Tous droits réservés - <a href="mailto:contact@fly.fr" class="underline">Contactez-nous</a></p>
+</footer>
+
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("home_button").addEventListener("click", function () {
+            window.location.href = "/";  // Redirige vers la page à propos
+        });
+    });
+</script>
+</html>
