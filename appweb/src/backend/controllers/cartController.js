@@ -2,13 +2,18 @@ const pool = require('../../database/db');
 
 // ➤ 1. Ajouter un produit au panier
 exports.addToCart = async (req, res) => {
+    console.log('Debut addToCart')
     try {
+
         const { user_id, product_id, quantity } = req.body;
+        console.log("Requête addToCart :", { user_id, product_id, quantity });
 
         // Vérifier si l'utilisateur a déjà un panier
         let cart = await pool.query('SELECT id FROM carts WHERE user_id = $1', [user_id]);
+        console.log("Cart existant :", cart.rows);
         if (cart.rows.length === 0) {
             cart = await pool.query('INSERT INTO carts (user_id) VALUES ($1) RETURNING id', [user_id]);
+            console.log("Nouveau cart créé :", cart.rows);
         }
         const cart_id = cart.rows[0].id;
 
@@ -17,11 +22,14 @@ exports.addToCart = async (req, res) => {
             'INSERT INTO cart_items (cart_id, product_id, quantity) VALUES ($1, $2, $3) RETURNING *',
             [cart_id, product_id, quantity]
         );
+        console.log("Article ajouté :", result.rows[0]);
         res.status(201).json(result.rows[0]);
     } catch (error) {
+        console.error("Erreur dans addToCart:", error);
         res.status(500).json({ error: error.message });
     }
 };
+
 
 // ➤ 2. Voir le panier d'un utilisateur
 exports.getCart = async (req, res) => {
