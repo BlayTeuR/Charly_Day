@@ -17,8 +17,9 @@
                     Créer un compte
                 </h1>
 
-                <!-- Encart d'erreur masqué par défaut -->
-                <div id="errorContainer" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative hidden">
+                <!-- Encart d'erreur général masqué par défaut -->
+                <div id="errorContainer"
+                     class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative hidden">
                     <span id="errorMessage"></span>
                 </div>
 
@@ -28,48 +29,89 @@
                         <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900">
                             Prénom
                         </label>
-                        <input type="text" name="first_name" id="first_name" placeholder="John" required
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                            focus:ring-[#81A969] focus:border-[#81A969] block w-full p-2.5">
+                        <input
+                                type="text"
+                                name="first_name"
+                                id="first_name"
+                                placeholder="John"
+                                required
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                     focus:ring-green-600 focus:border-green-600 block w-full p-2.5"
+                        >
                     </div>
                     <div>
                         <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900">
                             Nom
                         </label>
-                        <input type="text" name="last_name" id="last_name" placeholder="Doe" required
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                            focus:ring-[#81A969] focus:border-[#81A969] block w-full p-2.5">
+                        <input
+                                type="text"
+                                name="last_name"
+                                id="last_name"
+                                placeholder="Doe"
+                                required
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                     focus:ring-green-600 focus:border-green-600 block w-full p-2.5"
+                        >
                     </div>
                     <div>
                         <label for="email" class="block mb-2 text-sm font-medium text-[#095434]">
                             Email
                         </label>
-                        <input type="email" name="email" id="email" placeholder="name@company.com" required
-                               class="bg-gray-50 border border-gray-300 text-[#095434] text-sm rounded-lg
-                          focus:ring-[#81A969] focus:border-[#81A969] block w-full p-2.5">
+                        <input
+                                type="email"
+                                name="email"
+                                id="email"
+                                placeholder="name@company.com"
+                                required
+                                class="bg-gray-50 border border-gray-300 text-[#095434] text-sm rounded-lg
+                     focus:ring-[#81A969] focus:border-[#81A969] block w-full p-2.5"
+                        >
                     </div>
+
+                    <!-- Ici, un div d'erreur SPECIFIQUE au mot de passe -->
+                    <div id="passwordError"
+                         class="text-red-600 text-sm mb-1 hidden">
+                        <!-- On le remplit en JS si passwordError arrive -->
+                    </div>
+
                     <div>
                         <label for="password" class="block mb-2 text-sm font-medium text-[#095434]">
                             Mot de passe
                         </label>
-                        <input type="password" name="password" id="password" placeholder="••••••••" required
-                               class="bg-gray-50 border border-gray-300 text-[#095434] text-sm rounded-lg
-                          focus:ring-[#81A969] focus:border-[#81A969] block w-full p-2.5">
+                        <input
+                                type="password"
+                                name="password"
+                                id="password"
+                                placeholder="••••••••"
+                                required
+                                class="bg-gray-50 border border-gray-300 text-[#095434] text-sm rounded-lg
+                     focus:ring-[#81A969] focus:border-[#81A969] block w-full p-2.5"
+                        >
                     </div>
                     <div>
                         <label for="confirm_password" class="block mb-2 text-sm font-medium text-[#095434]">
                             Confirmer le mot de passe
                         </label>
-                        <input type="password" name="confirm_password" id="confirm_password" placeholder="••••••••" required
-                               class="bg-gray-50 border border-gray-300 text-[#095434] text-sm rounded-lg
-                          focus:ring-[#81A969] focus:border-[#81A969] block w-full p-2.5">
+                        <input
+                                type="password"
+                                name="confirm_password"
+                                id="confirm_password"
+                                placeholder="••••••••"
+                                required
+                                class="bg-gray-50 border border-gray-300 text-[#095434] text-sm rounded-lg
+                     focus:ring-[#81A969] focus:border-[#81A969] block w-full p-2.5"
+                        >
                     </div>
                     <div class="flex items-start">
                         <div class="flex items-center h-5">
-                            <input id="terms" aria-describedby="terms" type="checkbox" required
-                                   class="w-4 h-4 border border-gray-300 rounded bg-gray-50
-                              focus:ring-3 focus:ring-[#81A969]">
-
+                            <input
+                                    id="terms"
+                                    aria-describedby="terms"
+                                    type="checkbox"
+                                    required
+                                    class="w-4 h-4 border border-gray-300 rounded bg-gray-50
+                       focus:ring-3 focus:ring-green-200"
+                            >
                         </div>
                         <div class="ml-3 text-sm">
                             <label for="terms" class="font-light text-gray-500">
@@ -80,10 +122,12 @@
                             </label>
                         </div>
                     </div>
-                    <button type="submit"
+                    <button
+                            type="submit"
                             class="w-full text-white bg-[#81A969] hover:bg-[#095434]
-                         focus:ring-4 focus:outline-none focus:ring-[#81A969]
-                         font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                   focus:ring-4 focus:outline-none focus:ring-[#81A969]
+                   font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                    >
                         Créer un compte
                     </button>
                     <p class="text-sm font-light text-gray-500">
@@ -106,14 +150,21 @@
 </footer>
 
 <script>
-    // On cible le formulaire et la div d'erreur
+    // On cible le formulaire et les divs d'erreur
     const registerForm = document.getElementById('registerForm');
     const errorContainer = document.getElementById('errorContainer');
     const errorMessage = document.getElementById('errorMessage');
+    const passwordErrorDiv = document.getElementById('passwordError');
 
     // Écouteur d'événement sur la soumission du formulaire
     registerForm.addEventListener('submit', async (e) => {
         e.preventDefault(); // Empêche le rechargement de la page
+
+        // Vider / masquer les anciennes erreurs
+        errorContainer.classList.add('hidden');
+        errorMessage.textContent = '';
+        passwordErrorDiv.classList.add('hidden');
+        passwordErrorDiv.textContent = '';
 
         // Récupérer les valeurs du formulaire
         const formData = new FormData(registerForm);
@@ -142,11 +193,23 @@
             } else {
                 // Si on reçoit une erreur (400, 401, etc.), on affiche le message
                 const errorData = await response.json();
-                errorMessage.textContent = errorData.message || 'Une erreur est survenue.';
-                errorContainer.classList.remove('hidden');
+
+                // Cas particulier : si c'est une erreur de mot de passe (passwordError)
+                if (errorData.passwordError) {
+                    // On l'affiche dans le div juste au-dessus du champ "Mot de passe"
+                    passwordErrorDiv.textContent = errorData.passwordError;
+                    passwordErrorDiv.classList.remove('hidden');
+                } else {
+                    // Autres erreurs (email déjà utilisé, mots de passe différents, etc.)
+                    errorMessage.textContent = errorData.message || 'Une erreur est survenue.';
+                    errorContainer.classList.remove('hidden');
+                }
+
+                // (Optionnel) Masquer le message d'erreur au bout de x secondes
                 setTimeout(() => {
+                    passwordErrorDiv.classList.add('hidden');
                     errorContainer.classList.add('hidden');
-                }, 7000);// Le message s'affiche 7 secondes
+                }, 7000);
             }
         } catch (err) {
             // Cas d'erreur réseau ou autre
@@ -156,6 +219,5 @@
         }
     });
 </script>
-
 </body>
 </html>
