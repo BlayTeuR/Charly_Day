@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const cors = require('cors');
 
 app.use(cors({
-    origin: 'https://charly-day.onrender.com',
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
