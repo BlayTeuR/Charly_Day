@@ -18,6 +18,15 @@
         .dropdown-menu {
             display: none;
         }
+        @keyframes blink-white {
+            0% { filter: brightness(1); }
+            50% { filter: brightness(2); }
+            100% { filter: brightness(1); }
+        }
+
+        .blink-white {
+            animation: blink-white 1s ease-in-out;
+        }
     </style>
 </head>
 <body class="bg-white text-[#095434] min-h-screen flex flex-col">
@@ -96,7 +105,7 @@
         <!-- Bouton de fermeture -->
         <button id="closeCart" class="text-2xl leading-none">&times;</button>
     </div>
-    <div class="p-4 overflow-y-auto" style="height: calc(100% - 140px);">
+    <div id="cartPanelContent" class="p-4 overflow-y-auto" style="height: calc(100% - 140px);">
         <!-- Contenu du panier -->
         <p>Aucun produit dans le panier.</p>
     </div>
@@ -122,6 +131,45 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3/build/jwt-decode.min.js"></script>
 <script>
+    function addToCart(productId, quantity = 1) {
+        // Récupérer le panier existant
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        // Vérifier si le produit est déjà dans le panier
+        const existingItem = cart.find(item => item.productId === productId);
+        if (existingItem) {
+            existingItem.quantity += quantity;
+        } else {
+            cart.push({ productId, quantity });
+        }
+
+        // Sauvegarder le panier mis à jour dans le localStorage
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        console.log("Panier mis à jour :", cart);
+        updateCartDisplay();
+    }
+
+    // Fonction pour mettre à jour l'affichage du contenu du panier
+    function updateCartDisplay() {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const cartContentEl = document.getElementById("cartPanelContent");
+
+        if (!cartContentEl) return;
+
+        if (cart.length === 0) {
+            cartContentEl.innerHTML = "<p>Aucun produit dans le panier.</p>";
+        } else {
+            // Vider le conteneur
+            cartContentEl.innerHTML = "";
+            cart.forEach(item => {
+                const itemDiv = document.createElement("div");
+                itemDiv.classList.add("mb-2", "border-b", "pb-2");
+                itemDiv.textContent = `Produit ID: ${item.productId} - Quantité: ${item.quantity}`;
+                cartContentEl.appendChild(itemDiv);
+            });
+        }
+    }
     // index.js
 
     // On attend que le DOM soit complètement chargé
@@ -192,18 +240,34 @@
                     return response.json();
                 })
                 .then((products) => {
-                    // Pour chaque produit, créer une carte et l'ajouter au conteneur
                     products.forEach((product) => {
                         const card = document.createElement("div");
                         card.classList.add("bg-white", "shadow", "rounded", "p-4", "mb-4");
                         card.innerHTML = `
-    <img src="${product.imagepath}" alt="${product.name}" class="w-full h-auto mb-2">
-    <h3 class="text-xl font-bold">${product.name}</h3>
-    <p class="text-gray-600">${product.description || ""}</p>
-    <p class="text-green-600 font-bold">${product.price} €</p>
-    <p class="text-gray-500">Stock: ${product.stock}</p>
-  `;
+                        <img src="${product.imagepath}" alt="${product.name}" class="w-full h-auto mb-2">
+                        <h3 class="text-xl font-bold">${product.name}</h3>
+                        <p class="text-gray-600">${product.description || ""}</p>
+                        <p class="text-green-600 font-bold">${product.price} €</p>
+                        <p class="text-gray-500">Stock: ${product.stock}</p>
+                        <button class="add-to-cart bg-[#095434] text-white py-2 px-4 rounded hover:bg-[#073920] transition mt-2" data-product-id="${product.id}">
+                            Ajouter au panier
+                        </button>
+                    `;
                         productListContainer.appendChild(card);
+                    });
+
+                    // Attacher l'événement à tous les boutons "Ajouter au panier"
+                    document.querySelectorAll('.add-to-cart').forEach(button => {
+                        button.addEventListener('click', function() {
+                            const productId = this.dataset.productId;
+                            addToCart(productId, 1);
+                            // Animation
+                            const cartIcon = document.getElementById("cartIcon");
+                            cartIcon.classList.add("animate-bounce", "blink-white");
+                            setTimeout(() => {
+                                cartIcon.classList.remove("animate-bounce", "blink-white");
+                            }, 1000);
+                        });
                     });
                 })
                 .catch((error) => {
@@ -211,6 +275,7 @@
                     productListContainer.innerHTML =
                         "<p class='text-red-600'>Impossible de charger les produits.</p>";
                 });
+            updateCartDisplay();
         }
 
         const profileIcon = document.getElementById("profileIcon");
