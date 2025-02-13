@@ -4,10 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cff880c9-e79e-42d0-913b-30ec5e1d8fd9" name="Changes" comment="Ajout Test authController.js">
-      <change beforePath="$PROJECT_DIR$/Tests/backend/controllers/userController.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/backend/controllers/userController.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/controllers/cartController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/controllers/cartController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/controllers/productController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/controllers/productController.js" afterDir="false" />
+    <list default="true" id="cff880c9-e79e-42d0-913b-30ec5e1d8fd9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/Charly_Day.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/discord.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/html/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/html/page_produits.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/html/page_produits.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,47 +40,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JavaScript Debug.page_partenaires.html.executor": "Run",
-    "Jest.createUser.devrait créer un utilisateur avec succès.executor": "Run",
-    "Jest.createUser.devrait créer un utilisateur et renvoyer les données de l\\'utilisateur créé.executor": "Run",
-    "Jest.createUser.devrait retourner une erreur générique pour des erreurs inattendues.executor": "Run",
-    "Jest.createUser.devrait échouer si un champ requis est manquant.executor": "Run",
-    "Jest.createUser.devrait échouer si une adresse email existe déjà.executor": "Run",
-    "Jest.createUser.executor": "Run",
-    "Jest.deleteUser.devrait retourner une erreur 404 si l\\'utilisateur n\\'est pas trouvé.executor": "Run",
-    "Jest.deleteUser.devrait retourner une erreur 500 si la requête échoue.executor": "Run",
-    "Jest.deleteUser.devrait supprimer un utilisateur avec succès.executor": "Run",
-    "Jest.getAllUsers.devrait retourner un tableau vide quand il n'y a aucun utilisateur dans la BD.executor": "Run",
-    "Jest.getAllUsers.devrait retourner une erreur générique pour des erreurs imprévues.executor": "Run",
-    "Jest.getAllUsers.devrait récupérer tous les utilisateurs avec succès.executor": "Run",
-    "Jest.getUserById.devrait retourner un utilisateur lorsqu\\'il existe.executor": "Run",
-    "Jest.getUserById.devrait retourner une erreur 404 si l\\'utilisateur n\\'est pas trouvé.executor": "Run",
-    "Jest.getUserById.devrait retourner une erreur 500 si la requête échoue.executor": "Run",
-    "Jest.login.devrait connecter un utilisateur avec un mot de passe valide et rediriger vers index.html.executor": "Run",
-    "Jest.register.devrait retourner une erreur 400 si l\\'email est invalide.executor": "Run",
-    "Jest.register.devrait retourner une erreur 400 si le mot de passe est trop court.executor": "Run",
-    "Jest.updateUser.devrait mettre à jour un utilisateur avec succès.executor": "Run",
-    "Jest.updateUser.devrait retourner une erreur 404 si l\\'utilisateur n\\'est pas trouvé.executor": "Run",
-    "Jest.updateUser.devrait retourner une erreur 500 si la requête échoue.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "javascript.nodejs.core.library.configured.version": "20.13.1",
-    "javascript.nodejs.core.library.typings.version": "20.13.0",
-    "last_opened_file_path": "C:/Users/natha/Desktop/CrazyCharlyDay/Charly_Day/appweb/img",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs.jest.jest_package": "C:/BUT INFO S3/Charly_pute/Charly_Day/appweb/node_modules/jest",
-    "nodejs_interpreter_path": "node",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2023.3.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JavaScript Debug.page_partenaires.html.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;20.13.1&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.13.0&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/natha/Desktop/CrazyCharlyDay/Charly_Day/appweb/img&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2023.2.5\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\natha\Desktop\CrazyCharlyDay\Charly_Day\appweb\img" />
@@ -87,79 +70,55 @@
       <recent name="C:\Users\natha\Desktop\CrazyCharlyDay\Charly_Day\appweb\src\backend" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.deleteUser.devrait retourner une erreur 500 si la requête échoue">
-    <configuration name="deleteUser.devrait retourner une erreur 404 si l\'utilisateur n\'est pas trouvé" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Jest.register.devrait retourner une erreur 400 si l\'email est invalide">
+    <configuration name="login.devrait connecter un utilisateur avec un mot de passe valide et rediriger vers index.html" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/node_modules/jest" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/Tests/backend/controllers/userController.test.js" />
+      <test-file value="$PROJECT_DIR$/Tests/backend/controllers/authController.test.js" />
       <test-names>
-        <test-name value="deleteUser" />
-        <test-name value="devrait retourner une erreur 404 si l\'utilisateur n\'est pas trouvé" />
+        <test-name value="login" />
+        <test-name value="devrait connecter un utilisateur avec un mot de passe valide et rediriger vers index.html" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="deleteUser.devrait retourner une erreur 500 si la requête échoue" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="register.devrait retourner une erreur 400 si l\'email est invalide" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/node_modules/jest" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/Tests/backend/controllers/userController.test.js" />
+      <test-file value="$PROJECT_DIR$/Tests/backend/controllers/authController.test.js" />
       <test-names>
-        <test-name value="deleteUser" />
-        <test-name value="devrait retourner une erreur 500 si la requête échoue" />
+        <test-name value="register" />
+        <test-name value="devrait retourner une erreur 400 si l\'email est invalide" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="deleteUser.devrait supprimer un utilisateur avec succès" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="register.devrait retourner une erreur 400 si le mot de passe est trop court" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/node_modules/jest" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/Tests/backend/controllers/userController.test.js" />
+      <test-file value="$PROJECT_DIR$/Tests/backend/controllers/authController.test.js" />
       <test-names>
-        <test-name value="deleteUser" />
-        <test-name value="devrait supprimer un utilisateur avec succès" />
+        <test-name value="register" />
+        <test-name value="devrait retourner une erreur 400 si le mot de passe est trop court" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="updateUser.devrait retourner une erreur 404 si l\'utilisateur n\'est pas trouvé" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/Tests/backend/controllers/userController.test.js" />
-      <test-names>
-        <test-name value="updateUser" />
-        <test-name value="devrait retourner une erreur 404 si l\'utilisateur n\'est pas trouvé" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="updateUser.devrait retourner une erreur 500 si la requête échoue" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/Tests/backend/controllers/userController.test.js" />
-      <test-names>
-        <test-name value="updateUser" />
-        <test-name value="devrait retourner une erreur 500 si la requête échoue" />
-      </test-names>
+    <configuration name="page_partenaires.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/appweb/html/page_partenaires.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Jest.deleteUser.devrait retourner une erreur 500 si la requête échoue" />
-        <item itemvalue="Jest.deleteUser.devrait retourner une erreur 404 si l\'utilisateur n\'est pas trouvé" />
-        <item itemvalue="Jest.deleteUser.devrait supprimer un utilisateur avec succès" />
-        <item itemvalue="Jest.updateUser.devrait retourner une erreur 500 si la requête échoue" />
-        <item itemvalue="Jest.updateUser.devrait retourner une erreur 404 si l\'utilisateur n\'est pas trouvé" />
+        <item itemvalue="Jest.register.devrait retourner une erreur 400 si l\'email est invalide" />
+        <item itemvalue="Jest.register.devrait retourner une erreur 400 si le mot de passe est trop court" />
+        <item itemvalue="Jest.login.devrait connecter un utilisateur avec un mot de passe valide et rediriger vers index.html" />
+        <item itemvalue="JavaScript Debug.page_partenaires.html" />
       </list>
     </recent_temporary>
   </component>
@@ -173,30 +132,9 @@
       <updated>1739437954231</updated>
       <workItem from="1739437955455" duration="1882000" />
     </task>
-    <task id="LOCAL-00001" summary="Ajout Test authController.js">
-      <option name="closed" value="true" />
-      <created>1739465325076</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1739465325076</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Ajout Test authController.js">
-      <option name="closed" value="true" />
-      <created>1739465547666</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1739465547666</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Ajout Test authController.js" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajout Test authController.js" />
   </component>
 </project>
