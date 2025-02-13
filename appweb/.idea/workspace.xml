@@ -4,10 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cff880c9-e79e-42d0-913b-30ec5e1d8fd9" name="Changes" comment="Ajout Test productController.js">
+    <list default="true" id="cff880c9-e79e-42d0-913b-30ec5e1d8fd9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/img/logo_1_vert_foncé.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/Charly_Day.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/discord.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/controllers/cartController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/controllers/cartController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/controllers/productController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/controllers/productController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/html/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,37 +43,26 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "JavaScript Debug.page_partenaires.html.executor": "Run",
-    "Jest.addToCart.devrait retourner une erreur si le produit ajouté n\\'existe pas.executor": "Run",
-    "Jest.clearCart.executor": "Run",
-    "Jest.createProduct.executor": "Run",
-    "Jest.devrait retourner une erreur 500 en cas de problème de base de données.executor": "Run",
-    "Jest.getCart.devrait retourner les articles du panier d\\'un utilisateur.executor": "Run",
-    "Jest.getCart.devrait retourner un message si le panier est vide.executor": "Run",
-    "Jest.getCart.devrait retourner une erreur 404 si l\\'utilisateur n\\'a pas de panier.executor": "Run",
-    "Jest.getCart.devrait retourner une erreur 500 en cas de problème de base de données.executor": "Run",
-    "Jest.removeFromCart.devrait retourner une erreur 404 si l\\'article n\\'existe pas.executor": "Run",
-    "Jest.removeFromCart.devrait retourner une erreur 500 en cas de problème avec la base de données.executor": "Run",
-    "Jest.removeFromCart.devrait supprimer un article du panier et retourner un message de succès.executor": "Run",
-    "Jest.updateCartItem.devrait mettre à jour la quantité d\\'un article du panier et retourner l\\'article mis à jour.executor": "Run",
-    "Jest.updateCartItem.devrait retourner une erreur 404 si l\\'article n\\'existe pas.executor": "Run",
-    "Jest.updateCartItem.devrait retourner une erreur 500 en cas de problème avec la base de données.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "javascript.nodejs.core.library.configured.version": "20.13.1",
     "javascript.nodejs.core.library.typings.version": "20.13.0",
+    "last_opened_file_path": "C:/Users/natha/Desktop/CrazyCharlyDay/Charly_Day/appweb/img",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs.jest.jest_package": "C:/BUT INFO S3/Charly_pute/Charly_Day/appweb/node_modules/jest",
     "nodejs_interpreter_path": "node",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2023.3.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2023.2.5\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\natha\Desktop\CrazyCharlyDay\Charly_Day\appweb\img" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\natha\Desktop\CrazyCharlyDay\Charly_Day\appweb\src\html" />
       <recent name="C:\Users\natha\Desktop\CrazyCharlyDay\Charly_Day\appweb\src\js" />
@@ -76,78 +70,13 @@
       <recent name="C:\Users\natha\Desktop\CrazyCharlyDay\Charly_Day\appweb\src\backend" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.clearCart.doit retourner une erreur si l'utilisateur n'a pas de panier">
-    <configuration name="clearCart" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/Tests/backend/controllers/cartController.test.js" />
-      <test-names>
-        <test-name value="clearCart" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="clearCart.doit retourner une erreur si l'utilisateur n'a pas de panier" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/Tests/backend/controllers/cartController.test.js" />
-      <test-names>
-        <test-name value="clearCart" />
-        <test-name value="doit retourner une erreur si l'utilisateur n'a pas de panier" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="removeFromCart.devrait retourner une erreur 404 si l\'article n\'existe pas" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/Tests/backend/controllers/cartController.test.js" />
-      <test-names>
-        <test-name value="removeFromCart" />
-        <test-name value="devrait retourner une erreur 404 si l\'article n\'existe pas" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="removeFromCart.devrait retourner une erreur 500 en cas de problème avec la base de données" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/Tests/backend/controllers/cartController.test.js" />
-      <test-names>
-        <test-name value="removeFromCart" />
-        <test-name value="devrait retourner une erreur 500 en cas de problème avec la base de données" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="removeFromCart.devrait supprimer un article du panier et retourner un message de succès" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/Tests/backend/controllers/cartController.test.js" />
-      <test-names>
-        <test-name value="removeFromCart" />
-        <test-name value="devrait supprimer un article du panier et retourner un message de succès" />
-      </test-names>
+  <component name="RunManager">
+    <configuration name="page_partenaires.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/appweb/html/page_partenaires.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Jest.clearCart.doit retourner une erreur si l'utilisateur n'a pas de panier" />
-        <item itemvalue="Jest.clearCart" />
-        <item itemvalue="Jest.removeFromCart.devrait retourner une erreur 500 en cas de problème avec la base de données" />
-        <item itemvalue="Jest.removeFromCart.devrait retourner une erreur 404 si l\'article n\'existe pas" />
-        <item itemvalue="Jest.removeFromCart.devrait supprimer un article du panier et retourner un message de succès" />
+        <item itemvalue="JavaScript Debug.page_partenaires.html" />
       </list>
     </recent_temporary>
   </component>
@@ -161,30 +90,9 @@
       <updated>1739437954231</updated>
       <workItem from="1739437955455" duration="1882000" />
     </task>
-    <task id="LOCAL-00001" summary="Ajout Test productController.js">
-      <option name="closed" value="true" />
-      <created>1739458400459</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1739458400459</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Ajout Test productController.js">
-      <option name="closed" value="true" />
-      <created>1739458553808</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1739458553808</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Ajout Test productController.js" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajout Test productController.js" />
   </component>
 </project>
