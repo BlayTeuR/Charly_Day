@@ -79,13 +79,17 @@ app.get('/commander', (req, res) => {
 });
 
 
+app.get('/produits', authenticate, (req, res) => {
+    res.sendFile(path.join(__dirname, 'html', 'page_produits.html'));
+});
+
 
 // Route racine pour vérifier que le serveur fonctionne
-app.get('/', (req, res) => {
+app.get('/index.html', authenticate, (req, res) => {
     res.sendFile(path.join(__dirname, 'html', 'index.html'));
 });
 
-app.get('/index.html', (req, res) => {
+app.get('/', authenticate, (req, res) => {
     res.sendFile(path.join(__dirname, 'html', 'index.html'));
 });
 
