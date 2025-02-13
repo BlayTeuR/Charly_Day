@@ -136,6 +136,25 @@
 
 <script>
     let productsMap = {};
+    let currentUserId = null;
+
+    fetch('/api/auth/profile', {
+        method: 'GET',
+        credentials: 'include'
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erreur lors de la récupération du profil');
+            }
+            return response.json();
+        })
+        .then(data => {
+            currentUserId = data.id;
+            console.log("ID de l'utilisateur connecté :", currentUserId);
+        })
+        .catch(error => {
+            console.error(error);
+        });
     // On attend que le DOM soit complètement chargé
     document.addEventListener("DOMContentLoaded", function () {
 
@@ -184,7 +203,58 @@
         const commanderButton = document.getElementById("commanderButton");
         if (commanderButton) {
             commanderButton.addEventListener("click", function (e) {
+                e.preventDefault();
                 event.stopPropagation();
+
+                if (!currentUserId) {
+                    alert("Vous devez être connecté pour commander.");
+                    return;
+                }
+
+                // Récupérer le panier stocké dans le localStorage
+                const cart = JSON.parse(localStorage.getItem("cart")) || [];
+                if (cart.length === 0) {
+                    alert("Votre panier est vide.");
+                    return;
+                }
+
+                // Pour chaque article du panier, envoyer une requête POST pour l'ajouter au panier côté serveur
+                Promise.all(cart.map(item => {
+                    console.log('userID:' + currentUserId);
+                    console.log('itemId:' + item.productId);
+                    console.log('qty:' + item.quantity);
+                    return fetch("/cart/add", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        credentials: "include",
+                        body: JSON.stringify({
+                            user_id: currentUserId,
+                            product_id: item.productId,
+                            quantity: item.quantity
+                        })
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error("Erreur lors de l'ajout d'un produit au panier");
+                            }
+                            return response.json();
+                        });
+                }))
+                    .then(results => {
+                        console.log("Tous les articles ont été envoyés au serveur :", results);
+                        // Vider le panier côté client
+                        localStorage.removeItem("cart");
+                        updateCartDisplay();
+                        // Rediriger ou afficher une confirmation
+                        window.location.href = "/?commandeSuccess=true";
+                    })
+                    .catch(error => {
+                        console.error("Erreur lors de la commande:", error);
+                        alert("Une erreur est survenue lors de la commande.");
+                    });
+
                 // Vide le panier
                 localStorage.removeItem("cart");
                 updateCartDisplay();
