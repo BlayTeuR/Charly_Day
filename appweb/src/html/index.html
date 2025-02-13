@@ -67,6 +67,7 @@
 
 <main class="flex-grow">
     <div class="container mx-auto py-10">
+        <div id="product-list" class="grid grid-cols-1 md:grid-cols-3 gap-6">
     </div>
 </main>
 
@@ -86,35 +87,99 @@
         <p>Aucun produit dans le panier.</p>
     </div>
     <div class="absolute bottom-0 left-0 w-full p-4 border-t">
+        <a href="/commander">
         <button class="w-full bg-[#095434] text-white py-2 rounded hover:bg-[#073920] transition">Commander</button>
+        </a>
+    </div>
+</div>
+
+<div id="successModal"
+     class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white p-6 rounded shadow-md text-center max-w-sm w-full">
+        <span class="text-green-600 text-6xl">✔️</span>
+        <h2 class="text-xl font-bold my-4">Commande validée !</h2>
+        <p class="mb-4">Votre commande a bien été effectuée.</p>
+        <button id="closeModalBtn" class="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+            Fermer
+        </button>
     </div>
 </div>
 
 </body>
 
 <script>
-    // Sélection des éléments
-    const cartIcon = document.getElementById('cartIcon');
-    const cartPanel = document.getElementById('cartPanel');
-    const closeCart = document.getElementById('closeCart');
+    // index.js
 
-    // Ouvrir le menu latéral lors du clic sur l'icône du panier
-    cartIcon.addEventListener('click', function(e) {
-        e.preventDefault();
-        cartPanel.classList.remove('translate-x-full');
-    });
+    // On attend que le DOM soit complètement chargé
+    document.addEventListener("DOMContentLoaded", function () {
+        // --- Fonctionnalités liées au panier ---
+        const cartIcon = document.getElementById("cartIcon");
+        const cartPanel = document.getElementById("cartPanel");
+        const closeCart = document.getElementById("closeCart");
+        const successModal = document.getElementById("successModal");
+        const closeModalBtn = document.getElementById("closeModalBtn");
 
-    // Fermer le menu latéral lors du clic sur le bouton de fermeture
-    closeCart.addEventListener('click', function() {
-        cartPanel.classList.add('translate-x-full');
-    });
+        // Ouvrir le menu lors du clic sur l'icône du panier
+        cartIcon.addEventListener("click", function (e) {
+            e.preventDefault();
+            cartPanel.classList.remove("translate-x-full");
+        });
 
-    // (Optionnel) Fermer le menu si l'utilisateur clique en dehors de celui-ci
-    document.addEventListener('click', function(event) {
-        if (!cartPanel.contains(event.target) && !cartIcon.contains(event.target)) {
-            cartPanel.classList.add('translate-x-full');
+        // Fermer le menu lors du clic sur fermeture
+        closeCart.addEventListener("click", function () {
+            cartPanel.classList.add("translate-x-full");
+        });
+
+        // Fermer le menu si l'utilisateur clique en dehors du panneau
+        document.addEventListener("click", function (event) {
+            if (!cartPanel.contains(event.target) && !cartIcon.contains(event.target)) {
+                cartPanel.classList.add("translate-x-full");
+            }
+        });
+
+        // Gestion du modal de succès de commande
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("commandeSuccess") === "true") {
+            successModal.classList.remove("hidden");
+        }
+
+        closeModalBtn.addEventListener("click", function () {
+            successModal.classList.add("hidden");
+            history.replaceState({}, "", window.location.pathname);
+        });
+
+        // --- Récupération et affichage des produits ---
+        const productListContainer = document.getElementById("product-list");
+        if (productListContainer) {
+            fetch("/products")
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Erreur lors de la récupération des produits");
+                    }
+                    return response.json();
+                })
+                .then((products) => {
+                    // Pour chaque produit, créer une carte et l'ajouter au conteneur
+                    products.forEach((product) => {
+                        const card = document.createElement("div");
+                        card.classList.add("bg-white", "shadow", "rounded", "p-4", "mb-4");
+                        card.innerHTML = `
+            <h3 class="text-xl font-bold">${product.name}</h3>
+            <p class="text-gray-600">${product.description || ""}</p>
+            <p class="text-green-600 font-bold">${product.price} €</p>
+            <p class="text-gray-500">Stock: ${product.stock}</p>
+          `;
+                        productListContainer.appendChild(card);
+                    });
+                })
+                .catch((error) => {
+                    console.error("Erreur lors du fetch des produits:", error);
+                    productListContainer.innerHTML =
+                        "<p class='text-red-600'>Impossible de charger les produits.</p>";
+                });
         }
     });
+
 </script>
 
 </html>

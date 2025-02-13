@@ -4,12 +4,15 @@ const port = process.env.PORT || 3000;
 const app = express();
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
 
 
 // Middleware pour parser le JSON
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static(path.join(__dirname, 'js')));
 
 // Route pour tester la connexion PostgreSQL
 app.get('/test-db', async (req, res) => {
@@ -21,6 +24,9 @@ app.get('/test-db', async (req, res) => {
     }
 });
 
+app.get('js/index.js', async (req, res) => {
+    res.sendFile('/js/index.js');
+})
 // Routes d'authentification
 const authRoutes = require('./backend/routes/authRoutes');
 app.use('/api/auth', authRoutes);
@@ -30,7 +36,7 @@ app.use('/api/admin', adminRoutes);
 
 // Routes Back-office
 const productRoutes = require('./backend/routes/productRoutes');
-app.use('/backoffice/products', productRoutes);
+app.use('/products', productRoutes);
 
 
 // ### IMPORTATION DES ROUTES
@@ -51,6 +57,35 @@ app.get('/login', (req, res) => {
 });
 app.get('/login.html', (req, res) => {
     res.redirect('/login');
+});
+
+app.get('/checkout', authenticate, (req, res) => {
+    res.sendFile(path.join(__dirname, 'html', 'checkout.html'));
+});
+
+app.get('/commander', (req, res) => {
+    const token = req.cookies.token;
+    if (!token) {
+        // Pas de token => pas connecté
+        return res.redirect('/login');
+    }
+    try {
+        // Vérifie si le token est valide
+        jwt.verify(token, process.env.JWT_SECRET);
+
+        // Ici, tu peux insérer la commande en base, ou faire toute autre logique.
+        // Une fois la commande validée, on redirige l'utilisateur vers la page d'accueil
+        // avec un paramètre de succès.
+        return res.redirect('/?commandeSuccess=true');
+    } catch (err) {
+        // Token invalide/expiré => redirige vers /login
+        return res.redirect('/login');
+    }
+});
+
+
+app.get('/produits', authenticate, (req, res) => {
+    res.sendFile(path.join(__dirname, 'html', 'page_produits.html'));
 });
 
 

@@ -8,22 +8,29 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-white text-[#095434] h-screen flex flex-col overflow-hidden">
-<!-- Section principale avec flex-1 pour occuper tout l'espace disponible -->
-<section class="bg-gray-50">
+<!-- Section principale -->
+<section class="bg-gray-50 h-full">
     <div class="flex flex-col items-center justify-center px-6 py-8 h-full">
         <div class="w-full max-w-2xl bg-white rounded-lg shadow p-8 space-y-6">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <h1 class="text-xl font-bold leading-tight tracking-tight text-[#095434] md:text-2xl">
                     Créer un compte
                 </h1>
-                <form class="space-y-4 md:space-y-6" method="post" action="/api/auth/register">
+
+                <!-- Encart d'erreur masqué par défaut -->
+                <div id="errorContainer" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative hidden">
+                    <span id="errorMessage"></span>
+                </div>
+
+                <!-- Formulaire SANS action ni method : on va tout gérer en JS -->
+                <form id="registerForm" class="space-y-4 md:space-y-6">
                     <div>
                         <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900">
                             Prénom
                         </label>
                         <input type="text" name="first_name" id="first_name" placeholder="John" required
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                            focus:ring-[#81A969] focus:border-[#81A969] block w-full p-2.5">
+                          focus:ring-green-600 focus:border-green-600 block w-full p-2.5">
                     </div>
                     <div>
                         <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900">
@@ -31,7 +38,7 @@
                         </label>
                         <input type="text" name="last_name" id="last_name" placeholder="Doe" required
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                            focus:ring-[#81A969] focus:border-[#81A969] block w-full p-2.5">
+                          focus:ring-green-600 focus:border-green-600 block w-full p-2.5">
                     </div>
                     <div>
                         <label for="email" class="block mb-2 text-sm font-medium text-[#095434]">
@@ -39,7 +46,7 @@
                         </label>
                         <input type="email" name="email" id="email" placeholder="name@company.com" required
                                class="bg-gray-50 border border-gray-300 text-[#095434] text-sm rounded-lg
-                            focus:ring-[#81A969] focus:border-[#81A969] block w-full p-2.5">
+                          focus:ring-[#81A969] focus:border-[#81A969] block w-full p-2.5">
                     </div>
                     <div>
                         <label for="password" class="block mb-2 text-sm font-medium text-[#095434]">
@@ -47,7 +54,7 @@
                         </label>
                         <input type="password" name="password" id="password" placeholder="••••••••" required
                                class="bg-gray-50 border border-gray-300 text-[#095434] text-sm rounded-lg
-                            focus:ring-[#81A969] focus:border-[#81A969] block w-full p-2.5">
+                          focus:ring-[#81A969] focus:border-[#81A969] block w-full p-2.5">
                     </div>
                     <div>
                         <label for="confirm_password" class="block mb-2 text-sm font-medium text-[#095434]">
@@ -55,31 +62,34 @@
                         </label>
                         <input type="password" name="confirm_password" id="confirm_password" placeholder="••••••••" required
                                class="bg-gray-50 border border-gray-300 text-[#095434] text-sm rounded-lg
-                            focus:ring-[#81A969] focus:border-[#81A969] block w-full p-2.5">
+                          focus:ring-[#81A969] focus:border-[#81A969] block w-full p-2.5">
                     </div>
                     <div class="flex items-start">
                         <div class="flex items-center h-5">
                             <input id="terms" aria-describedby="terms" type="checkbox" required
                                    class="w-4 h-4 border border-gray-300 rounded bg-gray-50
-                              focus:ring-3 focus:ring-[#81A969]">
+                            focus:ring-3 focus:ring-green-200">
                         </div>
                         <div class="ml-3 text-sm">
                             <label for="terms" class="font-light text-gray-500">
-                                J'accepte les <a href="#" class="font-medium text-[#81A969] hover:underline">
-                                Termes et Conditions
-                            </a>
+                                J'accepte les
+                                <a href="#" class="font-medium text-[#81A969] hover:underline">
+                                    Termes et Conditions
+                                </a>
                             </label>
                         </div>
                     </div>
                     <button type="submit"
                             class="w-full text-white bg-[#81A969] hover:bg-[#095434]
-                           focus:ring-4 focus:outline-none focus:ring-[#81A969]
-                           font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                         focus:ring-4 focus:outline-none focus:ring-[#81A969]
+                         font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                         Créer un compte
                     </button>
                     <p class="text-sm font-light text-gray-500">
-                        Vous avez déjà un compte ? <a href="login" class="font-medium text-[#81A969] hover:underline">
-                        Login here</a>
+                        Vous avez déjà un compte ?
+                        <a href="login" class="font-medium text-[#81A969] hover:underline">
+                            Se connecter
+                        </a>
                     </p>
                 </form>
             </div>
@@ -89,7 +99,62 @@
 
 <!-- Footer fixe -->
 <footer class="p-2 bg-[#81A969] text-white text-center fixed bottom-0 w-full">
-    <p>&copy; 2025 TITRE - Tous droits réservés - <a href="mailto:contact@example.com" class="hover:underline">Contactez-nous</a></p>
+    <p>&copy; 2025 TITRE - Tous droits réservés -
+        <a href="mailto:contact@example.com" class="hover:underline">Contactez-nous</a>
+    </p>
 </footer>
+
+<script>
+    // On cible le formulaire et la div d'erreur
+    const registerForm = document.getElementById('registerForm');
+    const errorContainer = document.getElementById('errorContainer');
+    const errorMessage = document.getElementById('errorMessage');
+
+    // Écouteur d'événement sur la soumission du formulaire
+    registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Empêche le rechargement de la page
+
+        // Récupérer les valeurs du formulaire
+        const formData = new FormData(registerForm);
+        const data = {
+            first_name: formData.get('first_name'),
+            last_name: formData.get('last_name'),
+            email: formData.get('email'),
+            password: formData.get('password'),
+            confirm_password: formData.get('confirm_password'),
+            // situation, si tu l'as
+        };
+
+        try {
+            // Appel à l'API (POST /api/auth/register)
+            const response = await fetch('/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+                credentials: 'include' // pour être sûr d'inclure le cookie si besoin
+            });
+
+            if (response.ok) {
+                // Si tout est OK (200), l'inscription est réussie
+                // -> Rediriger l'utilisateur vers la page d'accueil (ou où tu veux)
+                window.location.href = '/';
+            } else {
+                // Si on reçoit une erreur (400, 401, etc.), on affiche le message
+                const errorData = await response.json();
+                errorMessage.textContent = errorData.message || 'Une erreur est survenue.';
+                errorContainer.classList.remove('hidden');
+                setTimeout(() => {
+                    errorContainer.classList.add('hidden');
+                }, 7000);// Le message s'affiche 7 secondes
+            }
+        } catch (err) {
+            // Cas d'erreur réseau ou autre
+            console.error('Erreur:', err);
+            errorMessage.textContent = 'Une erreur inattendue s\'est produite.';
+            errorContainer.classList.remove('hidden');
+        }
+    });
+</script>
+
 </body>
 </html>
