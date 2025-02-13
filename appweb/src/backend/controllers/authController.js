@@ -10,7 +10,9 @@ const login = async (req, res) => {
             return res.status(400).json({ message: 'Veuillez fournir un email et un mot de passe' });
         }
 
-        const user = getUserByEmail(email);
+        const query = 'SELECT * FROM users WHERE email = $1';
+        const { rows } = await db.query(query, [email]);
+        const user = rows[0];
 
         // Comparer le mot de passe envoyé avec le hash stocké (colonne hash_password)
         const isValid = await bcrypt.compare(password, user.hash_password);
