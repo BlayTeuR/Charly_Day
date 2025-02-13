@@ -67,6 +67,7 @@
 
 <main class="flex-grow">
     <div class="container mx-auto py-10">
+        <div id="product-list" class="grid grid-cols-1 md:grid-cols-3 gap-6">
     </div>
 </main>
 
@@ -107,67 +108,75 @@
 </body>
 
 <script>
-    // Sélection des éléments
-    const cartIcon = document.getElementById('cartIcon');
-    const cartPanel = document.getElementById('cartPanel');
-    const closeCart = document.getElementById('closeCart');
-    const params = new URLSearchParams(window.location.search);
-    const successModal = document.getElementById('successModal');
-    const closeModalBtn = document.getElementById('closeModalBtn');
+    // index.js
 
-    // Ouvrir le menu latéral lors du clic sur l'icône du panier
-    cartIcon.addEventListener('click', function(e) {
-        e.preventDefault();
-        cartPanel.classList.remove('translate-x-full');
-    });
+    // On attend que le DOM soit complètement chargé
+    document.addEventListener("DOMContentLoaded", function () {
+        // --- Fonctionnalités liées au panier ---
+        const cartIcon = document.getElementById("cartIcon");
+        const cartPanel = document.getElementById("cartPanel");
+        const closeCart = document.getElementById("closeCart");
+        const successModal = document.getElementById("successModal");
+        const closeModalBtn = document.getElementById("closeModalBtn");
 
-    // Fermer le menu latéral lors du clic sur le bouton de fermeture
-    closeCart.addEventListener('click', function() {
-        cartPanel.classList.add('translate-x-full');
-    });
-
-    // (Optionnel) Fermer le menu si l'utilisateur clique en dehors de celui-ci
-    document.addEventListener('click', function(event) {
-        if (!cartPanel.contains(event.target) && !cartIcon.contains(event.target)) {
-            cartPanel.classList.add('translate-x-full');
-        }
-    });
-
-    window.addEventListener('DOMContentLoaded', () => {
-        // On récupère les paramètres de l'URL
-        const params = new URLSearchParams(window.location.search);
-        const successModal = document.getElementById('successModal');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-
-        // Si commandeSuccess = true, on affiche le modale
-        if (params.get('commandeSuccess') === 'true') {
-            successModal.classList.remove('hidden');
-        }
-
-        // Lorsque l'utilisateur clique sur "Fermer"
-        closeModalBtn.addEventListener('click', () => {
-            successModal.classList.add('hidden');
-            // On enlève le paramètre de l'URL (optionnel, pour nettoyer)
-            history.replaceState({}, '', '/');
+        // Ouvrir le menu lors du clic sur l'icône du panier
+        cartIcon.addEventListener("click", function (e) {
+            e.preventDefault();
+            cartPanel.classList.remove("translate-x-full");
         });
-    });
 
-    const jwt = require('jsonwebtoken');
+        // Fermer le menu lors du clic sur fermeture
+        closeCart.addEventListener("click", function () {
+            cartPanel.classList.add("translate-x-full");
+        });
 
-    app.get('/commander', (req, res) => {
-        const token = req.cookies.token;
-        if (!token) {
-            // Pas connecté => redirection vers /login
-            return res.redirect('/login');
+        // Fermer le menu si l'utilisateur clique en dehors du panneau
+        document.addEventListener("click", function (event) {
+            if (!cartPanel.contains(event.target) && !cartIcon.contains(event.target)) {
+                cartPanel.classList.add("translate-x-full");
+            }
+        });
+
+        // Gestion du modal de succès de commande
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("commandeSuccess") === "true") {
+            successModal.classList.remove("hidden");
         }
-        try {
-            jwt.verify(token, process.env.JWT_SECRET);
-            // Si le token est valide, on valide la commande
-            // Par exemple, tu peux renvoyer une page de confirmation
-            return res.send('Commande validée !');
-        } catch (err) {
-            // Token invalide ou expiré => renvoi vers /login
-            return res.redirect('/login');
+
+        closeModalBtn.addEventListener("click", function () {
+            successModal.classList.add("hidden");
+            history.replaceState({}, "", window.location.pathname);
+        });
+
+        // --- Récupération et affichage des produits ---
+        const productListContainer = document.getElementById("product-list");
+        if (productListContainer) {
+            fetch("/products")
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Erreur lors de la récupération des produits");
+                    }
+                    return response.json();
+                })
+                .then((products) => {
+                    // Pour chaque produit, créer une carte et l'ajouter au conteneur
+                    products.forEach((product) => {
+                        const card = document.createElement("div");
+                        card.classList.add("bg-white", "shadow", "rounded", "p-4", "mb-4");
+                        card.innerHTML = `
+            <h3 class="text-xl font-bold">${product.name}</h3>
+            <p class="text-gray-600">${product.description || ""}</p>
+            <p class="text-green-600 font-bold">${product.price} €</p>
+            <p class="text-gray-500">Stock: ${product.stock}</p>
+          `;
+                        productListContainer.appendChild(card);
+                    });
+                })
+                .catch((error) => {
+                    console.error("Erreur lors du fetch des produits:", error);
+                    productListContainer.innerHTML =
+                        "<p class='text-red-600'>Impossible de charger les produits.</p>";
+                });
         }
     });
 
