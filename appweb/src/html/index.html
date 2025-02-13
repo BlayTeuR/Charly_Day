@@ -202,6 +202,29 @@
 
         }
 
+        function buildOrderData() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            // Calculer le total en multipliant le prix de chaque produit par sa quantité
+            let total = 0;
+            const items = cart.map(item => {
+                const product = productsMap[Number(item.productId)]; // Assurez-vous du bon type
+                if (product) {
+                    total += product.price * item.quantity;
+                    return {
+                        product_id: product.id,
+                        quantity: item.quantity,
+                        price: product.price
+                    };
+                }
+            }).filter(Boolean);
+
+            return {
+                user_id: currentUserId, // récupéré via /api/auth/profile
+                total: total.toFixed(2),
+                items: items
+            };
+        }
+
         const commanderButton = document.getElementById("commanderButton");
         if (commanderButton) {
             commanderButton.addEventListener("click", function (e) {
@@ -212,6 +235,39 @@
                     alert("Vous devez être connecté pour commander.");
                     return;
                 }
+
+                const orderData = buildOrderData();
+                if (orderData.items.length === 0) {
+                    alert("Votre panier est vide.");
+                    return;
+                }
+
+                fetch("/orders/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    credentials: "include", // Envoie les cookies pour l'authentification
+                    body: JSON.stringify(orderData)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("Erreur lors de la création de la commande");
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log("Commande créée :", data);
+                        // Vider le panier côté client
+                        localStorage.removeItem("cart");
+                        updateCartDisplay();
+                        // Rediriger ou afficher une confirmation (par exemple, afficher successModal)
+                        window.location.href = "/?commandeSuccess=true";
+                    })
+                    .catch(error => {
+                        console.error("Erreur lors de la création de la commande :", error);
+                        alert("Une erreur est survenue lors de la commande.");
+                    });
 
                 // Récupérer le panier stocké dans le localStorage
                 const cart = JSON.parse(localStorage.getItem("cart")) || [];
