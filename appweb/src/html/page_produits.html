@@ -6,12 +6,6 @@
     <title>Réstore</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .hidden-checkbox {
-            display: none;
-        }
-        #announcementToggle:checked + #announcement {
-            display: none;
-        }
         .dropdown:hover .dropdown-menu {
             display: block;
         }
@@ -22,14 +16,6 @@
 </head>
 <body class="bg-white text-[#095434] min-h-screen flex flex-col">
 
-<input type="checkbox" id="announcementToggle" class="hidden-checkbox">
-
-<div id="announcement" class="bg-gray-100 text-[#095434] text-center text-sm py-2 relative">
-    Livraison en 5 à 10 jours ouvrés | Retrait gratuit en magasin
-    <label for="announcementToggle" class="absolute top-0 right-0 mt-1 mr-2 text-gray-600 hover:text-gray-800 cursor-pointer">
-        &times;
-    </label>
-</div>
 
 <header class="bg-[#81A969] text-white shadow-lg">
     <div class="container mx-auto flex items-center justify-between pt-2 px-6">
@@ -41,7 +27,7 @@
                 <button class="px-4 py-2 font-semibold hover:text-[#095434] transition duration-200">Accueil</button>
             </div>
             <div class="dropdown relative">
-                <button class="px-4 py-2 font-semibold hover:text-[#095434] transition duration-200">Produits</button>
+                <button class="px-4 py-2 font-semibold underline hover:text-[#095434] transition duration-200">Produits</button>
                 <div class="dropdown-menu absolute left-1/2 transform -translate-x-1/2 mt-2 bg-white text-black shadow-lg rounded">
                     <a href="#" class="block px-4 py-2 hover:text-[#095434]">Electroménager</a>
                     <a href="#" class="block px-4 py-2 hover:text-[#095434]">Mobilier</a>
