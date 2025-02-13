@@ -14,12 +14,12 @@
         <div class="w-full bg-white rounded-lg shadow sm:max-w-md xl:p-0">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
-                    Create an account
+                    Créer un compte
                 </h1>
-                <form class="space-y-4 md:space-y-6" action="#">
+                <form class="space-y-4 md:space-y-6" method="post" action="api/auth/register">
                     <div>
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900">
-                            Your email
+                            Email
                         </label>
                         <input type="email" name="email" id="email" placeholder="name@company.com" required
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
@@ -27,9 +27,17 @@
                     </div>
                     <div>
                         <label for="password" class="block mb-2 text-sm font-medium text-gray-900">
-                            Password
+                            Mot de passe
                         </label>
                         <input type="password" name="password" id="password" placeholder="••••••••" required
+                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                            focus:ring-green-600 focus:border-green-600 block w-full p-2.5">
+                    </div>
+                    <div>
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900">
+                            Confirmer le mot de passe
+                        </label>
+                        <input type="password" name="password" id="confirm_password" placeholder="••••••••" required
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
                             focus:ring-green-600 focus:border-green-600 block w-full p-2.5">
                     </div>
@@ -41,8 +49,8 @@
                         </div>
                         <div class="ml-3 text-sm">
                             <label for="terms" class="font-light text-gray-500">
-                                I accept the <a href="#" class="font-medium text-green-600 hover:underline">
-                                Terms and Conditions
+                                J'accepte les <a href="#" class="font-medium text-green-600 hover:underline">
+                                Termes et Conditions
                             </a>
                             </label>
                         </div>
@@ -51,10 +59,10 @@
                             class="w-full text-white bg-green-600 hover:bg-green-700
                            focus:ring-4 focus:outline-none focus:ring-green-300
                            font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                        Create an account
+                        Créer un compte
                     </button>
                     <p class="text-sm font-light text-gray-500">
-                        Vous n'avez pas encore de compte ? <a href="#" class="font-medium text-green-600 hover:underline">
+                        Vous avez déjà un compte ? <a href="login.html" class="font-medium text-green-600 hover:underline">
                         Login here</a>
                     </p>
                 </form>
