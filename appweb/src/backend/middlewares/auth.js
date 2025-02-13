@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const pool = require('../../database/db');
 
 // Middleware pour authentifier l'utilisateur (utilisé pour protéger les pages privées)
 const authenticate = (req, res, next) => {
@@ -39,13 +40,26 @@ const redirectIfAuthenticated = (req, res, next) => {
 };
 
 // Middleware pour autoriser uniquement les administrateurs (par exemple)
-const authorizeAdmin = (req, res, next) => {
-    let idUser = req.user.id
+const authorizeAdmin = async (req, res, next) => {
+    try {
+        const userId = req.user.id; // Récupérer l'ID utilisateur depuis le token
 
-    if (req.user && req.user === true) {
-        return next();
+        // Vérifier en base de données si l'utilisateur est admin
+        const result = await pool.query('SELECT is_admin FROM users WHERE id = $1', [userId]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: "Utilisateur non trouvé" });
+        }
+
+        if (result.rows[0].is_admin === true) {
+            return next();
+        }
+
+        return res.status(403).json({ message: "Accès réservé aux administrateurs" });
+
+    } catch (error) {
+        res.status(500).json({ error: "Erreur serveur lors de la vérification des permissions" });
     }
-    return res.status(403).json({ message: "Accès réservé aux administrateurs" });
 };
 
 module.exports = { authenticate, redirectIfAuthenticated, authorizeAdmin };
