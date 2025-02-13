@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cff880c9-e79e-42d0-913b-30ec5e1d8fd9" name="Changes" comment="" />
+    <list default="true" id="cff880c9-e79e-42d0-913b-30ec5e1d8fd9" name="Changes" comment="Ajout Test productController.js">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_02_2025_12_02__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_02_2025_12_02__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/controllers/productController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/controllers/productController.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,6 +38,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "JavaScript Debug.page_partenaires.html.executor": "Run",
+    "Jest.createProduct.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
@@ -43,9 +48,10 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.jest.jest_package": "C:/BUT INFO S3/Charly_pute/Charly_Day/appweb/node_modules/jest",
     "nodejs_interpreter_path": "node",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2023.2.5\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2023.3.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -57,12 +63,25 @@
       <recent name="C:\Users\natha\Desktop\CrazyCharlyDay\Charly_Day\appweb\src\backend" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Jest.createProduct">
+    <configuration name="createProduct" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/Tests/backend/controllers/productController.test.js" />
+      <test-names>
+        <test-name value="createProduct" />
+      </test-names>
+      <method v="2" />
+    </configuration>
     <configuration name="page_partenaires.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/appweb/html/page_partenaires.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.createProduct" />
         <item itemvalue="JavaScript Debug.page_partenaires.html" />
       </list>
     </recent_temporary>
@@ -77,9 +96,22 @@
       <updated>1739437954231</updated>
       <workItem from="1739437955455" duration="1882000" />
     </task>
+    <task id="LOCAL-00001" summary="Ajout Test productController.js">
+      <option name="closed" value="true" />
+      <created>1739458400459</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1739458400459</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Ajout Test productController.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ajout Test productController.js" />
   </component>
 </project>
