@@ -38,6 +38,8 @@ app.use('/api/admin', adminRoutes);
 const productRoutes = require('./backend/routes/productRoutes');
 app.use('/products', productRoutes);
 
+app.use('/img_server', express.static(path.join(__dirname, '../img_server')));
+
 
 // ### IMPORTATION DES ROUTES
 // on importe les routes pour la gestion de l'utilisateur dans la bdd
