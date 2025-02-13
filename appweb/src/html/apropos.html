@@ -47,7 +47,7 @@
         </div>
         <nav class="flex space-x-8">
             <div class="dropdown relative">
-                <button class="px-4 py-2 font-semibold underline hover:text-[#095434] transition duration-200">Accueil</button>
+                <button class="px-4 py-2 font-semibold  hover:text-[#095434] transition duration-200" id="home_button">Accueil</button>
             </div>
             <div class="dropdown relative">
                 <button class="px-4 py-2 font-semibold hover:text-[#095434] transition duration-200">Produits</button>
@@ -57,7 +57,7 @@
                 </div>
             </div>
             <div class="dropdown relative">
-                <button class="px-4 py-2 font-semibold hover:text-[#095434] transition duration-200" id="apropos-button">À propos</button>
+                <button class="px-4 py-2 font-semibold underline hover:text-[#095434] transition duration-200" id="apropos-button">À propos</button>
             </div>
         </nav>
         <div class="flex items-center space-x-4">
@@ -114,4 +114,11 @@
 </footer>
 
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("home_button").addEventListener("click", function () {
+            window.location.href = "/";  // Redirige vers la page à propos
+        });
+    });
+</script>
 </html>
