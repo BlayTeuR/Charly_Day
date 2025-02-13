@@ -10,6 +10,13 @@
         body {
             font-family: 'Merriweather', serif;
         }
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10;
+        }
         .hidden-checkbox {
             display: none;
         }
@@ -27,7 +34,6 @@
             50% { filter: brightness(2); }
             100% { filter: brightness(1); }
         }
-
         .blink-white {
             animation: blink-white 1s ease-in-out;
         }
@@ -35,16 +41,17 @@
 </head>
 <body class="bg-white text-[#095434] min-h-screen flex flex-col">
 
-<input type="checkbox" id="announcementToggle" class="hidden-checkbox">
 
-<div id="announcement" class="bg-gray-200 text-[#095434] text-center text-sm py-2 relative">
-    Livraison en 5 à 10 jours ouvrés | Retrait gratuit en magasin
-    <label for="announcementToggle" class="absolute top-0 right-0 mt-1 mr-2 text-gray-600 hover:text-gray-800 cursor-pointer">
-        &times;
-    </label>
-</div>
 
 <header class="bg-[#81A969] text-white shadow-lg">
+    <input type="checkbox" id="announcementToggle" class="hidden-checkbox">
+
+    <div id="announcement" class="bg-gray-200 text-[#095434] text-center text-sm py-2 relative">
+        Livraison en 5 à 10 jours ouvrés | Retrait gratuit en magasin
+        <label for="announcementToggle" class="absolute top-0 right-0 mt-1 mr-2 text-gray-600 hover:text-gray-800 cursor-pointer">
+            &times;
+        </label>
+    </div>
     <div class="container mx-auto flex items-center justify-between pt-2 px-6">
         <div class="flex items-center">
             <img src="../img/logo_1_vert_foncé.png" alt="Réstore Logo" class="h-20 pl-10">
@@ -75,7 +82,6 @@
                 <img src="../img/cart.png" alt="Panier" class="h-8">
             </a>
             <div class="relative">
-                <!-- Icône profil -->
                 <a href="#" id="profileIcon" class="inline-block">
                     <img src="../img/baseProfil.png" alt="Profil" class="h-8">
                 </a>
@@ -102,15 +108,12 @@
     <p>&copy; 2025 Réstore - Tous droits réservés - <a href="mailto:contact@fly.fr" class="underline">Contactez-nous</a></p>
 </footer>
 
-<!-- Menu latéral du panier -->
 <div id="cartPanel" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50">
     <div class="p-4 flex justify-between items-center border-b">
         <h2 class="text-xl font-bold">Votre Panier</h2>
-        <!-- Bouton de fermeture -->
         <button id="closeCart" class="text-2xl leading-none">&times;</button>
     </div>
     <div id="cartPanelContent" class="p-4 overflow-y-auto" style="height: calc(100% - 140px);">
-        <!-- Contenu du panier -->
         <p>Aucun produit dans le panier.</p>
     </div>
     <div class="absolute bottom-0 left-0 w-full p-4 border-t">
@@ -164,7 +167,6 @@
         if (cart.length === 0) {
             cartContentEl.innerHTML = "<p>Aucun produit dans le panier.</p>";
         } else {
-            // Vider le conteneur
             cartContentEl.innerHTML = "";
             cart.forEach(item => {
                 const itemDiv = document.createElement("div");
@@ -174,9 +176,7 @@
             });
         }
     }
-    // index.js
 
-    // On attend que le DOM soit complètement chargé
     document.addEventListener("DOMContentLoaded", function () {
         // --- Fonctionnalités liées au panier ---
         const cartIcon = document.getElementById("cartIcon");
@@ -185,18 +185,15 @@
         const successModal = document.getElementById("successModal");
         const closeModalBtn = document.getElementById("closeModalBtn");
 
-        // Ouvrir le menu lors du clic sur l'icône du panier
         cartIcon.addEventListener("click", function (e) {
             e.preventDefault();
             cartPanel.classList.remove("translate-x-full");
         });
 
-        // Fermer le menu lors du clic sur fermeture
         closeCart.addEventListener("click", function () {
             cartPanel.classList.add("translate-x-full");
         });
 
-        // Fermer le menu si l'utilisateur clique en dehors du panneau
         document.addEventListener("click", function (event) {
             if (!cartPanel.contains(event.target) && !cartIcon.contains(event.target)) {
                 cartPanel.classList.add("translate-x-full");
@@ -214,7 +211,7 @@
             history.replaceState({}, "", window.location.pathname);
         });
 
-        // --- Récupération et affichage des produits ---
+        // Récupération et affichage des produits
         const productListContainer = document.getElementById("product-list");
         if (productListContainer) {
             fetch("/products")
@@ -298,13 +295,11 @@
                 loginOrLogoutLink.href = "/login";
             });
 
-        // Clic sur l’icône => toggle du menu
         profileIcon.addEventListener("click", (e) => {
             e.preventDefault();
             profileMenu.classList.toggle("hidden");
         });
 
-        // Fermer le menu si clic en dehors
         document.addEventListener("click", (event) => {
             if (!profileMenu.contains(event.target) && !profileIcon.contains(event.target)) {
                 profileMenu.classList.add("hidden");
