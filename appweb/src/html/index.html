@@ -149,22 +149,19 @@
                     return response.json();
                 })
                 .then((products) => {
-                    // Pour chaque produit, on le stock et on cree la carte produit
+                    productListContainer.innerHTML = "";
                     products.forEach((product) => {
-                        productsMap[product.id] = product; // stocker les infos pour le panier
-
                         const card = document.createElement("div");
-                        card.classList.add("bg-white", "shadow", "rounded", "p-4", "mb-4");
+                        card.classList.add("bg-white", "shadow-lg", "rounded-xl", "overflow-hidden", "hover:scale-105", "transition-transform", "duration-300");
                         card.innerHTML = `
-          <img src="${product.imagepath}" alt="${product.name}" class="w-full h-auto mb-2">
-          <h3 class="text-xl font-bold">${product.name}</h3>
-          <p class="text-gray-600">${product.description || ""}</p>
-          <p class="text-green-600 font-bold">${product.price} €</p>
-          <p class="text-gray-500">Stock: ${product.stock}</p>
-          <button class="add-to-cart bg-[#095434] text-white py-2 px-4 rounded hover:bg-[#073920] transition mt-2" data-product-id="${product.id}">
-              Ajouter au panier
-          </button>
-        `;
+                        <img src="${product.imagepath}" alt="${product.name}" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-xl font-bold text-[#095434] mb-2">${product.name}</h3>
+                            <p class="text-gray-600 mb-3">${product.description || "Description non disponible"}</p>
+                            <p class="text-green-700 font-bold text-lg mb-4">${product.price} €</p>
+                            <button class="add-to-cart bg-[#095434] w-full text-white py-2 px-4 rounded hover:bg-[#073920] transition" data-product-id="${product.id}">Ajouter au panier</button>
+                        </div>
+                    `;
                         productListContainer.appendChild(card);
                     });
                     document.querySelectorAll('.add-to-cart').forEach(button => {
