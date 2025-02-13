@@ -19,10 +19,10 @@ app.get('/test-db', async (req, res) => {
 });
 
 // Routes d'authentification
-const authRoutes = require('./backend/routes/auth');
+const authRoutes = require('./backend/routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
-const adminRoutes = require('./backend/routes/admin');
+const adminRoutes = require('./backend/routes/adminRoutes');
 app.use('/api/admin', adminRoutes);
 
 // Routes Back-office
