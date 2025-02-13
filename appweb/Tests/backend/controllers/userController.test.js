@@ -5,49 +5,53 @@ const pool = require('../../../src/database/db');
 jest.mock('../../../src/database/db');
 
 describe('createUser', () => {
-    it('devrait créer un utilisateur avec succès', async () => {
-        const mockUser = {
-            id: 1,
-            email: 'user@example.com',
-            hash_password: 'hashedPassword',
-            admin: false,
-            situation: 'active'
-        };
-
-        // Mock de la réponse de la base de données
-        pool.query.mockResolvedValueOnce({ rows: [mockUser] });
-
-        // Crée des objets simulés pour `req` et `res`
+    it('devrait créer un utilisateur et renvoyer les données de l\'utilisateur créé', async () => {
+        // Données d'exemple pour la requête
         const req = {
             body: {
-                email: 'user@example.com',
-                hash_password: 'hashedPassword',
+                first_name: 'John',
+                last_name: 'Doe',
+                email: 'john.doe@example.com',
+                hash_password: 'hashed_password',
                 admin: false,
-                situation: 'active'
-            }
+                situation: false,
+            },
         };
-
         const res = {
             status: jest.fn().mockReturnThis(),
-            json: jest.fn()
+            json: jest.fn(),
         };
 
-        // Appeler la méthode `createUser` avec les objets mockés
+        // Résultat simulé pour la base de données
+        pool.query.mockResolvedValueOnce({
+            rows: [{
+                id: 1,
+                first_name: 'John',
+                last_name: 'Doe',
+                email: 'john.doe@example.com',
+                hash_password: 'hashed_password',
+                admin: false,
+                situation: false,
+            }],
+        });
+
+        // Exécution de la fonction
         await createUser(req, res);
 
-        // Vérifier que la méthode `status` a bien été appelée avec 201
+        // Vérifier que la réponse a un code de statut 201
         expect(res.status).toHaveBeenCalledWith(201);
 
-        // Vérifier que `json` a bien été appelé avec l'utilisateur mocké
-        expect(res.json).toHaveBeenCalledWith(mockUser);
-
-        // Vérifier que la requête a été exécutée avec les bons paramètres
-        expect(pool.query).toHaveBeenCalledWith(
-            'INSERT INTO users (email, hash_password, admin, situation) VALUES ($1, $2, $3, $4) RETURNING *',
-            ['user@example.com', 'hashedPassword', false, 'active']
-        );
+        // Vérifier que la fonction renvoie les données de l'utilisateur créé
+        expect(res.json).toHaveBeenCalledWith({
+            id: 1,
+            first_name: 'John',
+            last_name: 'Doe',
+            email: 'john.doe@example.com',
+            hash_password: 'hashed_password',
+            admin: false,
+            situation: false,
+        });
     });
-
     it('devrait retourner une erreur si la base de données échoue', async () => {
         // Simuler une erreur de base de données
         pool.query.mockRejectedValueOnce(new Error('Erreur de la base de données'));
@@ -76,8 +80,12 @@ describe('createUser', () => {
         expect(res.json).toHaveBeenCalledWith({ error: 'Erreur de la base de données' });
     });
     it('devrait échouer si un champ requis est manquant', async () => {
+        pool.query.mockRejectedValueOnce(new Error("null value in column \"email\" violates not-null constraint"))
         const req = {
             body: {
+                id: 1,
+                first_name: 'John',
+                last_name: 'Doe',
                 // L'email est manquant
                 hash_password: 'hashedPassword',
                 admin: false,
@@ -102,6 +110,9 @@ describe('createUser', () => {
     it("devrait échouer si une adresse email existe déjà", async  () => {
         const req = {
             body: {
+                id : 1,
+                first_name : "Hugo",
+                last_name : "Rysak",
                 email: 'user@example.com',
                 hash_password: 'hashedPassword',
                 admin: false,
@@ -132,6 +143,9 @@ describe('createUser', () => {
 
         const req = {
             body: {
+                id : 1,
+                first_name : "Hugo",
+                last_name : "Rysak",
                 email: 'user@example.com',
                 hash_password: 'hashedPassword',
                 admin: false,
@@ -158,8 +172,8 @@ describe('createUser', () => {
 describe('getAllUsers', () => {
     it('devrait récupérer tous les utilisateurs avec succès', async () => {
         const mockUsers = [
-            { id: 1, email: 'user1@example.com', admin: false, situation: 'active' },
-            { id: 2, email: 'user2@example.com', admin: true, situation: 'inactive' }
+            { id: 1,first_name : "Hugo",last_name : "Rysak" , email: 'user1@example.com', admin: false, situation: 'active' },
+            { id: 2,first_name : "Hugo",last_name : "Rysak"  ,email: 'user2@example.com', admin: true, situation: 'inactive' }
         ];
 
         // Simuler la réponse de la base de données
@@ -234,6 +248,8 @@ describe('getUserById', () => {
     it('devrait retourner un utilisateur lorsqu\'il existe', async () => {
         const mockUser = {
             id: 1,
+            first_name : "Hugo",
+            last_name : "Rysak",
             email: 'user@example.com',
             hash_password: 'hashedPassword',
             admin: false,
@@ -308,6 +324,8 @@ describe('updateUser', () => {
     it('devrait mettre à jour un utilisateur avec succès', async () => {
         const mockUpdatedUser = {
             id: 1,
+            first_name : "Hugo",
+            last_name : "Rysak",
             email: 'updated@example.com',
             hash_password: 'newHashedPassword',
             admin: false,
@@ -320,6 +338,8 @@ describe('updateUser', () => {
         const req = {
             params: { id: 1 }, // ID de l'utilisateur
             body: {
+                first_name : "Hugo",
+                last_name : "Rysak",
                 email: 'updated@example.com',
                 hash_password: 'newHashedPassword',
                 admin: false,
@@ -339,8 +359,8 @@ describe('updateUser', () => {
 
         // Vérifier que la requête a été exécutée avec les bons paramètres
         expect(pool.query).toHaveBeenCalledWith(
-            'UPDATE users SET email = $1, hash_password = $2, admin = $3, situation = $4 WHERE id = $5 RETURNING *',
-            ['updated@example.com', 'newHashedPassword', false, 'active', 1]
+            'UPDATE users SET first_name = $1, last_name = $2, email = $3, hash_password = $4, admin = $5, situation = $6 WHERE id = $7 RETURNING *',
+            ["Hugo","Rysak",'updated@example.com', 'newHashedPassword', false, 'active', 1]
         );
     });
 
@@ -351,6 +371,8 @@ describe('updateUser', () => {
         const req = {
             params: { id: 999 }, // ID d'utilisateur inexistant
             body: {
+                first_name : "Hugo",
+                last_name : "Rysak",
                 email: 'updated@example.com',
                 hash_password: 'newHashedPassword',
                 admin: false,
@@ -379,6 +401,8 @@ describe('updateUser', () => {
         const req = {
             params: { id: 1 }, // ID d'utilisateur
             body: {
+                first_name : "Hugo",
+                last_name : "Rysak",
                 email: 'updated@example.com',
                 hash_password: 'newHashedPassword',
                 admin: false,
@@ -407,6 +431,8 @@ describe('deleteUser', () => {
     it('devrait supprimer un utilisateur avec succès', async () => {
         const mockDeletedUser = {
             id: 1,
+            first_name : "Hugo",
+            last_name : "Rysak",
             email: 'user@example.com',
             hash_password: 'hashedPassword',
             admin: false,

@@ -57,13 +57,24 @@ exports.updateCartItem = async (req, res) => {
 // ➤ 4. Supprimer un produit du panier
 exports.removeFromCart = async (req, res) => {
     try {
-        const { cartItemId } = req.params;
-        await pool.query('DELETE FROM cart_items WHERE id = $1', [cartItemId]);
-        res.json({ message: 'Produit supprimé du panier' });
+        const { cartId, productId } = req.params;
+
+        // Vérifier si l'article existe dans le panier
+        const result = await pool.query(
+            'DELETE FROM cart_items WHERE cart_id = $1 AND product_id = $2 RETURNING *',
+            [cartId, productId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Produit non trouvé dans le panier' });
+        }
+
+        res.json({ message: 'Produit supprimé du panier', deletedItem: result.rows[0] });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
+
 
 // ➤ 5. Vider le panier
 exports.clearCart = async (req, res) => {
