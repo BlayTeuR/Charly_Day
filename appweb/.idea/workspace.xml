@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cff880c9-e79e-42d0-913b-30ec5e1d8fd9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/img/logo_1_vert_foncé.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/Charly_Day.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/discord.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/html/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/controllers/cartController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/controllers/cartController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/controllers/productController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/controllers/productController.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,19 +37,28 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "JavaScript Debug.page_partenaires.html.executor": "Run",
+    "Jest.login.devrait connecter un utilisateur avec un mot de passe valide et rediriger vers index.html.executor": "Run",
+    "Jest.login.devrait retourner une erreur si l\\'email ou le mot de passe est manquant.executor": "Run",
+    "Jest.login.devrait retourner une erreur si l\\'utilisateur n\\'existe pas.executor": "Run",
+    "Jest.login.devrait retourner une erreur si le mot de passe est incorrect.executor": "Run",
+    "Jest.login.executor": "Run",
+    "Jest.register.devrait inscrire un utilisateur et rediriger vers index.html.executor": "Run",
+    "Jest.register.devrait retourner une erreur 500 en cas de problème avec l\\'insertion de l\\'utilisateur.executor": "Run",
+    "Jest.register.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "javascript.nodejs.core.library.configured.version": "20.13.1",
-    "javascript.nodejs.core.library.typings.version": "20.13.0",
+    "javascript.nodejs.core.library.configured.version": "20.11.1",
+    "javascript.nodejs.core.library.typings.version": "20.11.30",
     "last_opened_file_path": "C:/Users/natha/Desktop/CrazyCharlyDay/Charly_Day/appweb/img",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.jest.jest_package": "C:/BUT INFO S3/Charly_pute/Charly_Day/appweb/node_modules/jest",
     "nodejs_interpreter_path": "node",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2023.2.5\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2023.3.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -70,13 +73,77 @@
       <recent name="C:\Users\natha\Desktop\CrazyCharlyDay\Charly_Day\appweb\src\backend" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="page_partenaires.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/appweb/html/page_partenaires.html" useBuiltInWebServerPort="true">
+  <component name="RunManager" selected="Jest.register.devrait retourner une erreur 500 en cas de problème avec l\'insertion de l\'utilisateur">
+    <configuration name="login" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/Tests/backend/controllers/authController.test.js" />
+      <test-names>
+        <test-name value="login" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="login.devrait retourner une erreur si le mot de passe est incorrect" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/Tests/backend/controllers/authController.test.js" />
+      <test-names>
+        <test-name value="login" />
+        <test-name value="devrait retourner une erreur si le mot de passe est incorrect" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="register" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/Tests/backend/controllers/authController.test.js" />
+      <test-names>
+        <test-name value="register" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="register.devrait inscrire un utilisateur et rediriger vers index.html" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/Tests/backend/controllers/authController.test.js" />
+      <test-names>
+        <test-name value="register" />
+        <test-name value="devrait inscrire un utilisateur et rediriger vers index.html" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="register.devrait retourner une erreur 500 en cas de problème avec l\'insertion de l\'utilisateur" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/Tests/backend/controllers/authController.test.js" />
+      <test-names>
+        <test-name value="register" />
+        <test-name value="devrait retourner une erreur 500 en cas de problème avec l\'insertion de l\'utilisateur" />
+      </test-names>
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JavaScript Debug.page_partenaires.html" />
+        <item itemvalue="Jest.register.devrait retourner une erreur 500 en cas de problème avec l\'insertion de l\'utilisateur" />
+        <item itemvalue="Jest.register" />
+        <item itemvalue="Jest.register.devrait inscrire un utilisateur et rediriger vers index.html" />
+        <item itemvalue="Jest.login" />
+        <item itemvalue="Jest.login.devrait retourner une erreur si le mot de passe est incorrect" />
       </list>
     </recent_temporary>
   </component>
