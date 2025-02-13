@@ -32,7 +32,7 @@ const login = async (req, res) => {
         }
 
         // Vérifier si un user correspond à cet email
-        const query = 'SELECT * FROM users WHERE email = $1';
+        const query = 'SELECT * FROM public.users WHERE email = $1';
         const { rows } = await db.query(query, [email]);
         const user = rows[0];
 
