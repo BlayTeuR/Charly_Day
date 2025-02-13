@@ -31,10 +31,6 @@ app.get('js/index.js', async (req, res) => {
 const authRoutes = require('./backend/routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
-const adminRoute = require('./backend/routes/adminRoutes')
-app.get('/dashboard', adminRoute)
-
-
 // Routes Back-office
 const productRoutes = require('./backend/routes/productRoutes');
 app.use('/products', productRoutes);
@@ -45,7 +41,7 @@ app.use('/img_server', express.static(path.join(__dirname, '../img_server')));
 // ### IMPORTATION DES ROUTES
 // on importe les routes pour la gestion de l'utilisateur dans la bdd
 const userRoutes = require('./backend/routes/userRoutes');
-const {authenticate} = require("./backend/middlewares/auth");
+const {authenticate, authorizeAdmin} = require("./backend/middlewares/auth");
 app.use('/users', userRoutes);
 
 app.use('/img', express.static(path.join(__dirname, 'img')));
@@ -114,8 +110,17 @@ app.get('/produits', authenticate, (req, res) => {
     res.sendFile(path.join(__dirname, 'html', 'page_produits.html'));
 });
 
+app.get('/dashboard', authenticate, authorizeAdmin, (req, res) => {
+    res.sendFile(path.join(__dirname, 'html', 'dashboard.html'));
+});
 
+app.get('/commandes_admin', authenticate, authorizeAdmin, (req, res) => {
+    res.sendFile(path.join(__dirname, 'html', 'commandes_admin.html'));
+});
 
+app.get('/users_admin', authenticate, authorizeAdmin, (req, res) => {
+    res.sendFile(path.join(__dirname, 'html', 'users_admin.html'));
+});
 // Route racine pour vérifier que le serveur fonctionne
 app.get('/index.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'html', 'index.html'));

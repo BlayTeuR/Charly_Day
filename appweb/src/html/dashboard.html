@@ -3,9 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Réstore</title>
+    <title>Dashboard Restore</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        body {
+            font-family: 'Merriweather', serif;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10;
+        }
         .hidden-checkbox {
             display: none;
         }
@@ -31,41 +42,39 @@
 </head>
 <body class="bg-white text-[#095434] min-h-screen flex flex-col">
 
-<input type="checkbox" id="announcementToggle" class="hidden-checkbox">
 
-<div id="announcement" class="bg-gray-200 text-[#095434] text-center text-sm py-2 relative">
-    Livraison en 5 à 10 jours ouvrés | Retrait gratuit en magasin
-    <label for="announcementToggle" class="absolute top-0 right-0 mt-1 mr-2 text-gray-600 hover:text-gray-800 cursor-pointer">
-        &times;
-    </label>
-</div>
 
 <header class="bg-[#81A969] text-white shadow-lg">
+    <input type="checkbox" id="announcementToggle" class="hidden-checkbox">
+
+    <div id="announcement" class="bg-gray-200 text-[#095434] text-center text-sm py-2 relative">
+        Livraison en 5 à 10 jours ouvrés | Retrait gratuit en magasin
+        <label for="announcementToggle" class="absolute top-0 right-0 mt-1 mr-2 text-gray-600 hover:text-gray-800 cursor-pointer">
+            &times;
+        </label>
+    </div>
     <div class="container mx-auto flex items-center justify-between pt-2 px-6">
         <div class="flex items-center">
             <img src="../img/logo_1_vert_foncé.png" alt="Réstore Logo" class="h-20 pl-10">
         </div>
         <nav class="flex space-x-8">
             <div class="dropdown relative">
-                <button class="px-4 py-2 font-semibold underline hover:text-[#095434] transition duration-200">Accueil</button>
+                <button class="px-4 py-2 font-semibold underline hover:text-[#095434] transition duration-200">Dashboard</button>
             </div>
             <div class="dropdown relative">
-                <button class="px-4 py-2 font-semibold hover:text-[#095434] transition duration-200">Produits</button>
+                <button class="px-4 py-2 font-semibold hover:text-[#095434] transition duration-200" id="users_button">Users</button>
                 <div class="dropdown-menu absolute left-1/2 transform -translate-x-1/2 mt-2 bg-white text-black shadow-lg rounded">
                     <a href="#" class="block px-4 py-2 hover:text-[#095434]">Electroménager</a>
                     <a href="#" class="block px-4 py-2 hover:text-[#095434]">Mobilier</a>
                 </div>
             </div>
             <div class="dropdown relative">
-                <button class="px-4 py-2 font-semibold hover:text-[#095434] transition duration-200">A propos</button>
+                <button class="px-4 py-2 font-semibold hover:text-[#095434] transition duration-200" id="commandes-button">Commandes</button>
             </div>
         </nav>
         <div class="flex items-center space-x-4">
             <div class="relative">
-                <input type="text" placeholder="Rechercher..." class="px-4 py-2 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-[#095434]">
-                <svg class="w-5 h-5 absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M12.9 14.32a8 8 0 111.414-1.414l4.387 4.387a1 1 0 01-1.414 1.414l-4.387-4.387zM14 8a6 6 0 11-12 0 6 6 0 0112 0z" clip-rule="evenodd"></path>
-                </svg>
+                <p class="px-4 py-2 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-[#095434]">Interface ADMIN</p>
             </div>
             <a href="#" id="cartIcon">
                 <img src="../img/cart.png" alt="Panier" class="h-8">
@@ -88,10 +97,10 @@
     </div>
 </header>
 
-<main class="flex-grow">
+<main class="flex-grow pt-[5.5rem]">
     <div class="container mx-auto py-10">
-        <div id="product-list" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        </div>
+        <div id="product-list" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+    </div>
 </main>
 
 <footer class="bg-[#81A969] text-white text-center py-4">
@@ -111,7 +120,7 @@
     </div>
     <div class="absolute bottom-0 left-0 w-full p-4 border-t">
         <a href="/commander">
-            <button class="w-full bg-[#095434] text-white py-2 rounded hover:bg-[#073920] transition">Commander</button>
+            <button id="commanderButton" class="w-full bg-[#095434] text-white py-2 rounded hover:bg-[#073920] transition">Commander</button>
         </a>
     </div>
 </div>
@@ -130,5 +139,262 @@
 
 </body>
 
+<script>
+    let productsMap = {};
+    // On attend que le DOM soit complètement chargé
+    document.addEventListener("DOMContentLoaded", function () {
+
+        // --- Récupération et affichage des produits ---
+        const productListContainer = document.getElementById("product-list");
+        if (productListContainer) {
+            fetch("/products")
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Erreur lors de la récupération des produits");
+                    }
+                    return response.json();
+                })
+                .then((products) => {
+                    // Pour chaque produit, on le stock et on cree la carte produit
+                    products.forEach((product) => {
+                        productsMap[product.id] = product; // stocker les infos pour le panier
+
+                        const card = document.createElement("div");
+                        card.classList.add("bg-white", "shadow", "rounded", "p-4", "mb-4");
+                        card.innerHTML = `
+          <img src="${product.imagepath}" alt="${product.name}" class="w-full h-auto mb-2">
+          <h3 class="text-xl font-bold">${product.name}</h3>
+          <p class="text-gray-600">${product.description || ""}</p>
+          <p class="text-green-600 font-bold">${product.price} €</p>
+          <p class="text-gray-500">Stock: ${product.stock}</p>
+          <button class="add-to-cart bg-[#095434] text-white py-2 px-4 rounded hover:bg-[#073920] transition mt-2" data-product-id="${product.id}">
+              Ajouter au panier
+          </button>
+        `;
+                        productListContainer.appendChild(card);
+                    });
+                    document.querySelectorAll('.add-to-cart').forEach(button => {
+                        button.addEventListener('click', function() {
+                            const productId = this.dataset.productId;
+                            addToCart(productId, 1);
+                        });
+                    });
+                    updateCartDisplay();
+                })
+                .catch((error) => {
+                    console.error("Erreur lors du fetch des produits:", error);
+                    productListContainer.innerHTML =
+                        "<p class='text-red-600'>Impossible de charger les produits.</p>";
+                });
+
+        }
+
+        const commanderButton = document.getElementById("commanderButton");
+        if (commanderButton) {
+            commanderButton.addEventListener("click", function (e) {
+                // Vide le panier
+                localStorage.removeItem("cart");
+                updateCartDisplay();
+            });
+        }
+
+        document.getElementById("commandes-button").addEventListener("click", function() {
+            window.location.href = "/commandes_admin";  // commande admin redirect
+        });
+
+        document.getElementById("users_button").addEventListener("click", function() {
+            window.location.href = "/users_admin";  // commande admin redirect
+        });
+
+        // --- Fonctionnalités liées au panier ---
+        const cartIcon = document.getElementById("cartIcon");
+        const cartPanel = document.getElementById("cartPanel");
+        const closeCart = document.getElementById("closeCart");
+        const successModal = document.getElementById("successModal");
+        const closeModalBtn = document.getElementById("closeModalBtn");
+
+        // Ouvrir le menu lors du clic sur l'icône du panier
+        cartIcon.addEventListener("click", function (e) {
+            e.preventDefault();
+            cartPanel.classList.remove("translate-x-full");
+        });
+
+        // Fermer le menu lors du clic sur fermeture
+        closeCart.addEventListener("click", function () {
+            cartPanel.classList.add("translate-x-full");
+        });
+
+        // Fermer le menu si l'utilisateur clique en dehors du panneau
+        document.addEventListener("click", function (event) {
+            if (!cartPanel.contains(event.target) && !cartIcon.contains(event.target)) {
+                cartPanel.classList.add("translate-x-full");
+            }
+        });
+
+        // Gestion du modal de succès de commande
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("commandeSuccess") === "true") {
+            successModal.classList.remove("hidden");
+        }
+
+        closeModalBtn.addEventListener("click", function () {
+            successModal.classList.add("hidden");
+            history.replaceState({}, "", window.location.pathname);
+        });
+
+        const profileIcon = document.getElementById("profileIcon");
+        const profileMenu = document.getElementById("profileMenu");
+        const loginOrLogoutLink = document.getElementById("loginOrLogoutLink");
+
+        // Vérifier si l'utilisateur est connecté
+        fetch("/api/is-logged-in", { credentials: "include" })
+            .then(res => res.json())
+            .then(data => {
+                if (data.loggedIn) {
+                    // Connecté => “Se déconnecter”
+                    loginOrLogoutLink.textContent = "Se déconnecter";
+                    // On veut, au clic, appeler /api/auth/logout puis recharger la page
+                    loginOrLogoutLink.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        fetch("/api/auth/logout")
+                            .then(() => {
+                                // On recharge la page, ou on redirige vers '/'
+                                window.location.reload();
+                            })
+                            .catch(err => console.error("Erreur logout:", err));
+                    });
+                } else {
+                    // Non connecté => “Se connecter”
+                    loginOrLogoutLink.textContent = "Se connecter";
+                    // On met un href = "/login"
+                    loginOrLogoutLink.setAttribute("href", "/login");
+                }
+            })
+            .catch(err => {
+                console.error("Erreur is-logged-in:", err);
+                // Par défaut, on propose “Se connecter”
+                loginOrLogoutLink.textContent = "Se connecter";
+                loginOrLogoutLink.href = "/login";
+            });
+
+        // Clic sur l’icône => toggle du menu
+        profileIcon.addEventListener("click", (e) => {
+            e.preventDefault();
+            profileMenu.classList.toggle("hidden");
+        });
+
+        // Fermer le menu si clic en dehors
+        document.addEventListener("click", (event) => {
+            if (!profileMenu.contains(event.target) && !profileIcon.contains(event.target)) {
+                profileMenu.classList.add("hidden");
+            }
+        });
+    });
+
+    function addToCart(productId, quantity = 1) {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const existingItem = cart.find(item => item.productId === productId);
+        if (existingItem) {
+            existingItem.quantity += quantity;
+        } else {
+            cart.push({ productId, quantity });
+        }
+        localStorage.setItem("cart", JSON.stringify(cart));
+        console.log("Panier mis à jour :", cart);
+        updateCartDisplay();
+    }
+
+
+    // Fonction pour mettre à jour l'affichage du contenu du panier
+    function updateCartDisplay() {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const cartContentEl = document.getElementById("cartPanelContent");
+
+        if (!cartContentEl) return;
+
+        if (cart.length === 0) {
+            cartContentEl.innerHTML = "<p>Aucun produit dans le panier.</p>";
+        } else {
+            cartContentEl.innerHTML = "";
+
+            cart.forEach(item => {
+                // Récupérer les infos du produit à partir d'un mapping global
+                const product = productsMap[item.productId];
+                const itemDiv = document.createElement("div");
+                itemDiv.classList.add("mb-2", "border-b", "pb-2", "flex", "items-center", "space-x-2");
+
+                if (product) {
+                    // Image miniature
+                    const img = document.createElement("img");
+                    img.src = product.imagepath;
+                    img.alt = product.name;
+                    img.classList.add("w-10", "h-10", "object-cover", "rounded");
+
+                    // Nom du produit
+                    const nameSpan = document.createElement("span");
+                    nameSpan.textContent = product.name;
+
+                    // Bouton moins
+                    const minusButton = document.createElement("button");
+                    minusButton.textContent = "-";
+                    minusButton.classList.add("bg-gray-200", "px-2", "py-1", "rounded", "hover:bg-gray-300");
+                    minusButton.addEventListener("click", () => {
+                        updateCartItem(product.id, -1);
+                    });
+
+                    // Affichage de la quantité
+                    const quantitySpan = document.createElement("span");
+                    quantitySpan.textContent = ` x${item.quantity} `;
+                    quantitySpan.classList.add("font-bold");
+
+                    // Bouton plus
+                    const plusButton = document.createElement("button");
+                    plusButton.textContent = "+";
+                    plusButton.classList.add("bg-gray-200", "px-2", "py-1", "rounded", "hover:bg-gray-300");
+                    plusButton.addEventListener("click", () => {
+                        updateCartItem(product.id, 1);
+                    });
+
+                    // Assembler l'élément du panier
+                    itemDiv.appendChild(img);
+                    itemDiv.appendChild(nameSpan);
+                    itemDiv.appendChild(minusButton);
+                    itemDiv.appendChild(quantitySpan);
+                    itemDiv.appendChild(plusButton);
+                } else {
+                    // Fallback si le produit n'est pas dans le mapping
+                    itemDiv.textContent = `Produit ID: ${item.productId} - Quantité: ${item.quantity}`;
+                }
+
+                cartContentEl.appendChild(itemDiv);
+            });
+        }
+    }
+
+
+    function updateCartItem(productId, delta) {
+        // Récupérer le panier existant
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const index = cart.findIndex(item => item.productId == productId);
+
+        if (index !== -1) {
+            // Modifier la quantité
+            cart[index].quantity += delta;
+
+            // Si la quantité devient 0 ou moins, supprimer l'article
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+
+            // Sauvegarder le panier mis à jour
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            // Mettre à jour l'affichage du panier
+            updateCartDisplay();
+        }
+    }
+
+
+</script>
 
 </html>
