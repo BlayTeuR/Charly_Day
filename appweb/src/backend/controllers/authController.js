@@ -1,7 +1,6 @@
 const db = require('../../database/db');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const {getUserByEmail} = require("../models/user");
 
 const login = async (req, res) => {
     try {
@@ -30,7 +29,11 @@ const login = async (req, res) => {
             { expiresIn: '1h' }
         );
 
-        res.json({ token });
+        // Stocker le token dans un cookie HTTP-only (optionnel)
+        res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+
+        // Rediriger vers index.html
+        res.redirect('/');
     } catch (error) {
         console.error('Erreur lors de la connexion:', error);
         res.status(500).json({ message: 'Erreur interne du serveur' });
@@ -39,9 +42,16 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
     try {
-        const { email, password, situation } = req.body;
-        if (!email || !password) {
-            return res.status(400).json({ message: 'Veuillez fournir un email et un mot de passe' });
+        const { email, password, confirm_password, situation } = req.body;
+
+        // Vérifier que l'email, le mot de passe et la confirmation sont fournis
+        if (!email || !password || !confirm_password) {
+            return res.status(400).json({ message: 'Veuillez fournir un email, un mot de passe et confirmer le mot de passe' });
+        }
+
+        // Vérifier que les mots de passe correspondent
+        if (password !== confirm_password) {
+            return res.status(400).json({ message: 'Les mots de passe ne correspondent pas' });
         }
 
         // Vérifier si l'utilisateur existe déjà
@@ -76,7 +86,10 @@ const register = async (req, res) => {
             { expiresIn: '1h' }
         );
 
-        res.status(201).json({ token });
+        res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+
+        // Rediriger vers index.html
+        res.redirect('/');
     } catch (error) {
         console.error('Erreur lors de l\'inscription:', error);
         res.status(500).json({ message: 'Erreur interne du serveur' });

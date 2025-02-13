@@ -3,10 +3,13 @@ const pool = require('./database/db.js')
 const port = process.env.PORT || 3000;
 const app = express();
 const path = require('path');
+const cookieParser = require('cookie-parser');
 
 
 // Middleware pour parser le JSON
 app.use(express.json());
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 
 // Route pour tester la connexion PostgreSQL
 app.get('/test-db', async (req, res) => {
@@ -33,6 +36,7 @@ app.use('/backoffice/products', productRoutes);
 // ### IMPORTATION DES ROUTES
 // on importe les routes pour la gestion de l'utilisateur dans la bdd
 const userRoutes = require('./backend/routes/userRoutes');
+const {authenticate} = require("./backend/middlewares/auth");
 app.use('/users', userRoutes);
 
 
@@ -44,11 +48,18 @@ app.get('/register', (req, res) => {
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'html', 'login.html'));
 });
+app.get('/login.html', (req, res) => {
+    res.redirect('/login');
+});
 
 
 // Route racine pour vérifier que le serveur fonctionne
-app.get('/', (req, res) => {
-    res.send('Backend démarré !');
+app.get('/index.html', authenticate, (req, res) => {
+    res.sendFile(path.join(__dirname, 'html', 'index.html'));
+});
+
+app.get('/', authenticate, (req, res) => {
+    res.sendFile(path.join(__dirname, 'html', 'index.html'));
 });
 
 app.listen(port, () => {
