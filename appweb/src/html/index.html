@@ -115,7 +115,7 @@
     </div>
     <div class="absolute bottom-0 left-0 w-full p-4 border-t">
         <a href="/commander">
-            <button class="w-full bg-[#095434] text-white py-2 rounded hover:bg-[#073920] transition">Commander</button>
+            <button id="commanderButton" class="w-full bg-[#095434] text-white py-2 rounded hover:bg-[#073920] transition">Commander</button>
         </a>
     </div>
 </div>
@@ -179,6 +179,16 @@
 
     // On attend que le DOM soit complètement chargé
     document.addEventListener("DOMContentLoaded", function () {
+
+        const commanderButton = document.getElementById("commanderButton");
+        if (commanderButton) {
+            commanderButton.addEventListener("click", function (e) {
+                // Vide le panier
+                localStorage.removeItem("cart");
+                updateCartDisplay();
+            });
+        }
+
         document.getElementById("apropos-button").addEventListener("click", function() {
             window.location.href = "/apropos";  // Redirige vers la page à propos
         });
