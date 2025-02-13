@@ -68,7 +68,7 @@
                 </div>
             </div>
             <div class="dropdown relative">
-                <button class="px-4 py-2 font-semibold hover:text-[#095434] transition duration-200">A propos</button>
+                <button class="px-4 py-2 font-semibold hover:text-[#095434] transition duration-200" id="apropos-button">A propos</button>
             </div>
         </nav>
         <div class="flex items-center space-x-4">
@@ -118,7 +118,7 @@
     </div>
     <div class="absolute bottom-0 left-0 w-full p-4 border-t">
         <a href="/commander">
-            <button class="w-full bg-[#095434] text-white py-2 rounded hover:bg-[#073920] transition">Commander</button>
+            <button id="commanderButton" class="w-full bg-[#095434] text-white py-2 rounded hover:bg-[#073920] transition">Commander</button>
         </a>
     </div>
 </div>
@@ -138,6 +138,7 @@
 </body>
 
 <script>
+
     function addToCart(productId, quantity = 1) {
         // Récupérer le panier existant
         const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -178,6 +179,19 @@
     }
 
     document.addEventListener("DOMContentLoaded", function () {
+
+        const commanderButton = document.getElementById("commanderButton");
+        if (commanderButton) {
+            commanderButton.addEventListener("click", function (e) {
+                // Vide le panier
+                localStorage.removeItem("cart");
+                updateCartDisplay();
+            });
+        }
+
+        document.getElementById("apropos-button").addEventListener("click", function() {
+            window.location.href = "/apropos";  // Redirige vers la page à propos
+        });
         // --- Fonctionnalités liées au panier ---
         const cartIcon = document.getElementById("cartIcon");
         const cartPanel = document.getElementById("cartPanel");

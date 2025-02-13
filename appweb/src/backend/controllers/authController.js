@@ -74,7 +74,7 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
     try {
-        const { first_name, last_name, email, password, confirm_password, situation } = req.body;
+        const { first_name, last_name, email, password, confirm_password, professionnel } = req.body;
 
         // Vérifier que l'email, le mot de passe et la confirmation sont fournis
         if (!email || !password || !confirm_password) {

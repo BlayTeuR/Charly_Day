@@ -31,8 +31,9 @@ app.get('js/index.js', async (req, res) => {
 const authRoutes = require('./backend/routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
-const adminRoutes = require('./backend/routes/adminRoutes');
-app.use('/api/admin', adminRoutes);
+const adminRoute = require('./backend/routes/adminRoutes')
+app.get('/dashboard', adminRoute)
+
 
 // Routes Back-office
 const productRoutes = require('./backend/routes/productRoutes');
@@ -114,6 +115,7 @@ app.get('/produits', authenticate, (req, res) => {
 });
 
 
+
 // Route racine pour vérifier que le serveur fonctionne
 app.get('/index.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'html', 'index.html'));
@@ -123,7 +125,9 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'html', 'index.html'));
 });
 
-
+app.get('/apropos', (req, res) => {
+    res.sendFile(path.join(__dirname, 'html', 'apropos.html'));
+});
 app.listen(port, () => {
     console.log(`Serveur démarré sur le port ${port}`);
 });
