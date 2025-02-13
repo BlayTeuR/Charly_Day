@@ -2,6 +2,7 @@ const express = require('express');
 const pool = require('./database/db.js')
 const port = process.env.PORT || 3000;
 const app = express();
+const path = require('path');
 
 
 // Middleware pour parser le JSON
@@ -35,7 +36,14 @@ const userRoutes = require('./backend/routes/userRoutes');
 app.use('/users', userRoutes);
 
 
+// Route GET pour sevir les différentes page de l'applicaton
+app.get('/register', (req, res) => {
+    res.sendFile(path.join(__dirname, 'html', 'register.html'));
+});
 
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'html', 'login.html'));
+});
 
 
 // Route racine pour vérifier que le serveur fonctionne
