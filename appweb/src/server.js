@@ -86,6 +86,29 @@ app.get('/commander', (req, res) => {
     }
 });
 
+app.get('/api/is-logged-in', (req, res) => {
+    const token = req.cookies.token;
+    if (!token) {
+        return res.json({ loggedIn: false });
+    }
+
+    try {
+        jwt.verify(token, process.env.JWT_SECRET);
+        // Token valide
+        return res.json({ loggedIn: true });
+    } catch (err) {
+        // Token invalide ou expiré
+        return res.json({ loggedIn: false });
+    }
+});
+
+app.get('/api/auth/logout', (req, res) => {
+    // On supprime le cookie token
+    res.clearCookie('token');
+    // On peut ensuite renvoyer un JSON, ou rediriger
+    return res.status(200).json({ message: 'Déconnecté avec succès' });
+});
+
 
 app.get('/produits', authenticate, (req, res) => {
     res.sendFile(path.join(__dirname, 'html', 'page_produits.html'));
@@ -94,13 +117,14 @@ app.get('/produits', authenticate, (req, res) => {
 
 
 // Route racine pour vérifier que le serveur fonctionne
-app.get('/index.html', authenticate, (req, res) => {
+app.get('/index.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'html', 'index.html'));
 });
 
-app.get('/', authenticate, (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'html', 'index.html'));
 });
+
 
 app.listen(port, () => {
     console.log(`Serveur démarré sur le port ${port}`);
