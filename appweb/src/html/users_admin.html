@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Utilisateurs - Réstore</title>
+    <title>Administration des utilisateurs - Réstore</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -46,10 +46,10 @@
 <!-- MAIN -->
 <main class="flex-grow bg-gray-50">
     <div class="container mx-auto py-10 px-6">
-        <!-- Container pour la liste des utilisateurs -->
+        <!-- Container de la liste des utilisateurs -->
         <section class="bg-white shadow-lg rounded-lg p-8 mb-10">
             <h1 class="text-3xl font-bold text-center text-[#095434] mb-6">Liste des Utilisateurs</h1>
-            <!-- Tableau affichant les utilisateurs -->
+            <!-- Tableau pour afficher les utilisateurs -->
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
@@ -61,7 +61,7 @@
                     </tr>
                     </thead>
                     <tbody id="usersTable" class="bg-white divide-y divide-gray-200">
-                    <!-- Les lignes seront générées dynamiquement par JavaScript -->
+                    <!-- Les lignes seront insérées ici dynamiquement -->
                     </tbody>
                 </table>
             </div>
@@ -76,77 +76,20 @@
 
 <!-- SCRIPT -->
 <script>
-    // Récupérer et afficher la liste des utilisateurs
-    async function fetchUsers() {
-        try {
-            const response = await fetch('/api/users'); // Assurez-vous que cette route est bien configurée côté backend
-            if (!response.ok) {
-                throw new Error('Erreur lors de la récupération des utilisateurs');
-            }
-            const users = await response.json();
-            populateUsersTable(users);
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    function populateUsersTable(users) {
-        const usersTable = document.getElementById('usersTable');
-        usersTable.innerHTML = ''; // Nettoyer le contenu existant
-
-        users.forEach(user => {
-            const tr = document.createElement('tr');
-
-            // Prénom
-            const tdFirstName = document.createElement('td');
-            tdFirstName.className = 'px-6 py-4 whitespace-nowrap text-sm text-gray-900';
-            tdFirstName.textContent = user.first_name || 'N/A';
-            tr.appendChild(tdFirstName);
-
-            // Nom
-            const tdLastName = document.createElement('td');
-            tdLastName.className = 'px-6 py-4 whitespace-nowrap text-sm text-gray-900';
-            tdLastName.textContent = user.last_name || 'N/A';
-            tr.appendChild(tdLastName);
-
-            // Email
-            const tdEmail = document.createElement('td');
-            tdEmail.className = 'px-6 py-4 whitespace-nowrap text-sm text-gray-900';
-            tdEmail.textContent = user.email || 'N/A';
-            tr.appendChild(tdEmail);
-
-            // Rôle
-            const tdRole = document.createElement('td');
-            tdRole.className = 'px-6 py-4 whitespace-nowrap text-sm text-gray-900';
-            // Par exemple, en se basant sur le champ is_admin
-            tdRole.textContent = user.is_admin ? 'Admin' : 'Client';
-            tr.appendChild(tdRole);
-
-            usersTable.appendChild(tr);
-        });
-    }
-
-    // Gestion du menu profil et des redirections
     document.addEventListener("DOMContentLoaded", function () {
-        // Récupération des utilisateurs
-        fetchUsers();
-
-        // Bouton Dashboard
+        // Gestion des redirections pour le header
         document.getElementById("dashboard_button").addEventListener("click", function () {
             window.location.href = "/dashboard";
         });
-
-        // Bouton Commandes
         document.getElementById("commandes_button").addEventListener("click", function () {
             window.location.href = "/commandes_admin";
         });
 
-        // Menu profil
+        // Gestion du menu profil
         const profileIcon = document.getElementById("profileIcon");
         const profileMenu = document.getElementById("profileMenu");
         const loginOrLogoutLink = document.getElementById("loginOrLogoutLink");
 
-        // Vérifier si l'utilisateur est connecté
         fetch("/api/is-logged-in", { credentials: "include" })
             .then(res => res.json())
             .then(data => {
@@ -160,7 +103,7 @@
                     });
                 } else {
                     loginOrLogoutLink.textContent = "Se connecter";
-                    loginOrLogoutLink.setAttribute("href", "/login");
+                    loginOrLogoutLink.href = "/login";
                 }
             })
             .catch(err => {
@@ -169,18 +112,63 @@
                 loginOrLogoutLink.href = "/login";
             });
 
-        // Toggle du menu profil
         profileIcon.addEventListener("click", (e) => {
             e.preventDefault();
             profileMenu.classList.toggle("hidden");
         });
 
-        // Fermer le menu en cas de clic en dehors
         document.addEventListener("click", (event) => {
             if (!profileMenu.contains(event.target) && !profileIcon.contains(event.target)) {
                 profileMenu.classList.add("hidden");
             }
         });
+
+        // Récupérer la liste des utilisateurs via la route GET /users
+        async function fetchUsers() {
+            try {
+                const response = await fetch('/users', { credentials: 'include' });
+                if (!response.ok) {
+                    throw new Error("Erreur lors de la récupération des utilisateurs");
+                }
+                const users = await response.json();
+                populateUsersTable(users);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        function populateUsersTable(users) {
+            const usersTable = document.getElementById('usersTable');
+            usersTable.innerHTML = ''; // Réinitialiser le tableau
+            users.forEach(user => {
+                const tr = document.createElement('tr');
+
+                const tdFirstName = document.createElement('td');
+                tdFirstName.className = "px-6 py-4 whitespace-nowrap text-sm text-gray-900";
+                tdFirstName.textContent = user.first_name || 'N/A';
+                tr.appendChild(tdFirstName);
+
+                const tdLastName = document.createElement('td');
+                tdLastName.className = "px-6 py-4 whitespace-nowrap text-sm text-gray-900";
+                tdLastName.textContent = user.last_name || 'N/A';
+                tr.appendChild(tdLastName);
+
+                const tdEmail = document.createElement('td');
+                tdEmail.className = "px-6 py-4 whitespace-nowrap text-sm text-gray-900";
+                tdEmail.textContent = user.email || 'N/A';
+                tr.appendChild(tdEmail);
+
+                const tdRole = document.createElement('td');
+                tdRole.className = "px-6 py-4 whitespace-nowrap text-sm text-gray-900";
+                tdRole.textContent = user.is_admin ? 'Admin' : 'Client';
+                tr.appendChild(tdRole);
+
+                usersTable.appendChild(tr);
+            });
+        }
+
+        // Lancer la récupération des utilisateurs
+        fetchUsers();
     });
 </script>
 </body>
