@@ -26,8 +26,9 @@ app.get('/test-db', async (req, res) => {
 const authRoutes = require('./backend/routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
-const adminRoutes = require('./backend/routes/adminRoutes');
-app.use('/api/admin', adminRoutes);
+const adminRoute = require('./backend/routes/adminRoutes')
+app.get('/dashboard', adminRoute)
+
 
 // Routes Back-office
 const productRoutes = require('./backend/routes/productRoutes');
@@ -82,6 +83,7 @@ app.get('/commander', (req, res) => {
 app.get('/produits', authenticate, (req, res) => {
     res.sendFile(path.join(__dirname, 'html', 'page_produits.html'));
 });
+
 
 
 // Route racine pour vérifier que le serveur fonctionne

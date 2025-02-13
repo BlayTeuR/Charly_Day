@@ -28,7 +28,7 @@ exports.getCart = async (req, res) => {
     try {
         const { userId } = req.params;
         const result = await pool.query(`
-            SELECT ci.id, p.name, p.price, ci.quantity 
+            SELECT ci.id, p.name, p.price, p.imagepath, ci.quantity 
             FROM cart_items ci
             JOIN carts c ON ci.cart_id = c.id
             JOIN products p ON ci.product_id = p.id

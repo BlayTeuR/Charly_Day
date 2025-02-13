@@ -40,7 +40,9 @@ const redirectIfAuthenticated = (req, res, next) => {
 
 // Middleware pour autoriser uniquement les administrateurs (par exemple)
 const authorizeAdmin = (req, res, next) => {
-    if (req.user && req.user.role === 'admin') {
+    let idUser = req.user.id
+
+    if (req.user && req.user === true) {
         return next();
     }
     return res.status(403).json({ message: "Accès réservé aux administrateurs" });
