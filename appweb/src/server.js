@@ -41,6 +41,8 @@ app.use('/products', productRoutes);
 
 app.use('/img_server', express.static(path.join(__dirname, '../img_server')));
 
+const cartRoutes = require('./backend/routes/cartRoutes');
+app.use('/cart', cartRoutes);
 
 // ### IMPORTATION DES ROUTES
 // on importe les routes pour la gestion de l'utilisateur dans la bdd
