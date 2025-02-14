@@ -1,8 +1,10 @@
 const { Pool } = require("pg");
 
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL + "?sslmode=require", // 🔥 Forcer le SSL
-    ssl: { rejectUnauthorized: false },
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false, // 🔥 Accepte le certificat auto-signé de Render
+    },
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 5000,
     max: 10,
